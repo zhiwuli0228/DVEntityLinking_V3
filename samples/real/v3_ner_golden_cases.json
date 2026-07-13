@@ -1,0 +1,155 @@
+{
+  "metadata": {
+    "schema_version": "v3.ner_golden_cases.1",
+    "query_count": 6,
+    "uses_storage_artifacts": [
+      "samples/real/v3_gauss_entities.json",
+      "samples/real/v3_redis_entity_words.json"
+    ]
+  },
+  "queries": [
+    {
+      "id": "V3-Q-001",
+      "query": "Check ALM-51020 and CPU Usage.",
+      "expected_status": "linked",
+      "mentions": [
+        {
+          "text": "ALM-51020",
+          "span": [
+            6,
+            15
+          ],
+          "normalized_text": "alm-51020",
+          "entity_word_key": "alm-51020",
+          "expected_entity_ids": [
+            "DV-ALM-002"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "CPU Usage",
+          "span": [
+            20,
+            29
+          ],
+          "normalized_text": "cpuusage",
+          "entity_word_key": "cpuusage",
+          "expected_entity_ids": [
+            "DV-KPI-MTK-001"
+          ],
+          "expected_status": "linked"
+        }
+      ]
+    },
+    {
+      "id": "V3-Q-002",
+      "query": "Show CPU Usage for CloudHost-VM-1-1-000000.",
+      "expected_status": "partial",
+      "mentions": [
+        {
+          "text": "CPU Usage",
+          "span": [
+            5,
+            14
+          ],
+          "normalized_text": "cpuusage",
+          "entity_word_key": "cpuusage",
+          "expected_entity_ids": [
+            "DV-KPI-MTK-001"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "CloudHost-VM-1-1-000000",
+          "span": [
+            19,
+            42
+          ],
+          "normalized_text": "cloudhost-vm-1-1-000000",
+          "entity_word_key": "cloudhost-vm-1-1-000000",
+          "expected_entity_ids": [],
+          "expected_status": "no_match"
+        }
+      ]
+    },
+    {
+      "id": "V3-Q-003",
+      "query": "Open the operations dashboard.",
+      "expected_status": "not_required",
+      "mentions": [],
+      "negative_reason": "The query asks for a general dashboard and does not require entity linking."
+    },
+    {
+      "id": "V3-Q-004",
+      "query": "Show metrics for UnknownApp-999.",
+      "expected_status": "no_match",
+      "mentions": [
+        {
+          "text": "UnknownApp-999",
+          "span": [
+            17,
+            31
+          ],
+          "normalized_text": "unknownapp-999",
+          "entity_word_key": "unknownapp-999",
+          "expected_entity_ids": [],
+          "expected_status": "no_match"
+        }
+      ],
+      "negative_reason": "The query contains an entity-shaped token that is not present in the V3 Redis mock."
+    },
+    {
+      "id": "V3-Q-005",
+      "query": "Run Network quality monitoring for onlinecharging_docker.",
+      "expected_status": "linked",
+      "mentions": [
+        {
+          "text": "Network quality monitoring",
+          "span": [
+            4,
+            30
+          ],
+          "normalized_text": "networkqualitymonitoring",
+          "entity_word_key": "networkqualitymonitoring",
+          "expected_entity_ids": [
+            "DV-KPI-TASK-005"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "onlinecharging_docker",
+          "span": [
+            35,
+            56
+          ],
+          "normalized_text": "onlinecharging_docker",
+          "entity_word_key": "onlinecharging_docker",
+          "expected_entity_ids": [
+            "DV-NE-TYPE-002"
+          ],
+          "expected_status": "linked"
+        }
+      ]
+    },
+    {
+      "id": "V3-Q-006",
+      "query": "Query CPU Usage.",
+      "expected_status": "linked",
+      "mentions": [
+        {
+          "text": "CPU Usage",
+          "span": [
+            6,
+            15
+          ],
+          "normalized_text": "cpuusage",
+          "entity_word_key": "cpuusage",
+          "expected_entity_ids": [
+            "DV-KPI-MTK-001"
+          ],
+          "expected_status": "linked"
+        }
+      ]
+    }
+  ]
+}

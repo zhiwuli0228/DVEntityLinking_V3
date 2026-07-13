@@ -1,0 +1,380 @@
+{
+  "metadata": {
+    "schema_version": "v2.query_samples.1",
+    "query_language": "en",
+    "query_count": 12,
+    "multi_mention_supported": true,
+    "max_mentions_per_query": 2,
+    "allowed_expected_status": [
+      "linked",
+      "partial",
+      "no_match",
+      "not_required"
+    ]
+  },
+  "queries": [
+    {
+      "id": "V2-Q-001",
+      "query": "Show CPU Usage for CBS_1_cbpmdb_b2fc41cbb389(FI01).",
+      "mentions": [
+        {
+          "text": "CPU Usage",
+          "span": [
+            5,
+            14
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-MTK-001"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "CBS_1_cbpmdb_b2fc41cbb389(FI01)",
+          "span": [
+            19,
+            50
+          ],
+          "expected_entity_ids": [
+            "DV-NE-NAME-001"
+          ],
+          "expected_status": "linked"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-KPI-MTK-001"
+        },
+        {
+          "entity_id": "DV-NE-NAME-001"
+        }
+      ],
+      "expected_status": "linked"
+    },
+    {
+      "id": "V2-Q-002",
+      "query": "Is CPU Usage abnormal for Kafka Monitor?",
+      "mentions": [
+        {
+          "text": "CPU Usage",
+          "span": [
+            3,
+            12
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-MTK-001"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "Kafka Monitor",
+          "span": [
+            26,
+            39
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-TASK-002"
+          ],
+          "expected_status": "linked"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-KPI-MTK-001"
+        },
+        {
+          "entity_id": "DV-KPI-TASK-002"
+        }
+      ],
+      "expected_status": "linked"
+    },
+    {
+      "id": "V2-Q-003",
+      "query": "Check Average Receive Speed per time interval for onlinecharging_docker.",
+      "mentions": [
+        {
+          "text": "Average Receive Speed per time interval",
+          "span": [
+            6,
+            45
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-MTK-004"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "onlinecharging_docker",
+          "span": [
+            50,
+            71
+          ],
+          "expected_entity_ids": [
+            "DV-NE-TYPE-002"
+          ],
+          "expected_status": "linked"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-KPI-MTK-004"
+        },
+        {
+          "entity_id": "DV-NE-TYPE-002"
+        }
+      ],
+      "expected_status": "linked"
+    },
+    {
+      "id": "V2-Q-004",
+      "query": "Has IOPS Read increased on container(access-12345) recently?",
+      "mentions": [
+        {
+          "text": "IOPS Read",
+          "span": [
+            4,
+            13
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-MTK-006"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "container(access-12345)",
+          "span": [
+            27,
+            50
+          ],
+          "expected_entity_ids": [
+            "DV-NE-NAME-002"
+          ],
+          "expected_status": "linked"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-KPI-MTK-006"
+        },
+        {
+          "entity_id": "DV-NE-NAME-002"
+        }
+      ],
+      "expected_status": "linked"
+    },
+    {
+      "id": "V2-Q-005",
+      "query": "Open DCC error code num V6.",
+      "mentions": [
+        {
+          "text": "DCC error code num V6",
+          "span": [
+            5,
+            26
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-TASK-001"
+          ],
+          "expected_status": "linked"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-KPI-TASK-001"
+        }
+      ],
+      "expected_status": "linked"
+    },
+    {
+      "id": "V2-Q-006",
+      "query": "Query CPU Usage.",
+      "mentions": [
+        {
+          "text": "CPU Usage",
+          "span": [
+            6,
+            15
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-MTK-001"
+          ],
+          "expected_status": "linked"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-KPI-MTK-001"
+        }
+      ],
+      "expected_status": "linked"
+    },
+    {
+      "id": "V2-Q-007",
+      "query": "Show CPU Usage for CloudHost-VM-1-1-000000.",
+      "mentions": [
+        {
+          "text": "CPU Usage",
+          "span": [
+            5,
+            14
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-MTK-001"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "CloudHost-VM-1-1-000000",
+          "span": [
+            19,
+            42
+          ],
+          "expected_entity_ids": [],
+          "expected_status": "no_match"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-KPI-MTK-001"
+        }
+      ],
+      "expected_status": "partial"
+    },
+    {
+      "id": "V2-Q-008",
+      "query": "Open the operations dashboard.",
+      "mentions": [],
+      "expected_entities": [],
+      "expected_status": "not_required",
+      "negative_reason": "The query asks for a general dashboard and does not require entity linking."
+    },
+    {
+      "id": "V2-Q-009",
+      "query": "Compare Average Send Speed per time interval on CloudHost-VM-1-1-927344.",
+      "mentions": [
+        {
+          "text": "Average Send Speed per time interval",
+          "span": [
+            8,
+            44
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-MTK-005"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "CloudHost-VM-1-1-927344",
+          "span": [
+            48,
+            71
+          ],
+          "expected_entity_ids": [
+            "DV-NE-NAME-003"
+          ],
+          "expected_status": "linked"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-KPI-MTK-005"
+        },
+        {
+          "entity_id": "DV-NE-NAME-003"
+        }
+      ],
+      "expected_status": "linked"
+    },
+    {
+      "id": "V2-Q-010",
+      "query": "Run Network quality monitoring for onlinecharging_docker.",
+      "mentions": [
+        {
+          "text": "Network quality monitoring",
+          "span": [
+            4,
+            30
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-TASK-005"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "onlinecharging_docker",
+          "span": [
+            35,
+            56
+          ],
+          "expected_entity_ids": [
+            "DV-NE-TYPE-002"
+          ],
+          "expected_status": "linked"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-KPI-TASK-005"
+        },
+        {
+          "entity_id": "DV-NE-TYPE-002"
+        }
+      ],
+      "expected_status": "linked"
+    },
+    {
+      "id": "V2-Q-011",
+      "query": "Show metrics for UnknownApp-999.",
+      "mentions": [
+        {
+          "text": "UnknownApp-999",
+          "span": [
+            17,
+            31
+          ],
+          "expected_entity_ids": [],
+          "expected_status": "no_match"
+        }
+      ],
+      "expected_entities": [],
+      "expected_status": "no_match",
+      "negative_reason": "The query contains an entity-shaped token that is not present in the V2 startup catalog."
+    },
+    {
+      "id": "V2-Q-012",
+      "query": "Check ALM-51020 and CPU Usage.",
+      "mentions": [
+        {
+          "text": "ALM-51020",
+          "span": [
+            6,
+            15
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-002"
+          ],
+          "expected_status": "linked"
+        },
+        {
+          "text": "CPU Usage",
+          "span": [
+            20,
+            29
+          ],
+          "expected_entity_ids": [
+            "DV-KPI-MTK-001"
+          ],
+          "expected_status": "linked"
+        }
+      ],
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-002"
+        },
+        {
+          "entity_id": "DV-KPI-MTK-001"
+        }
+      ],
+      "expected_status": "linked"
+    }
+  ]
+}

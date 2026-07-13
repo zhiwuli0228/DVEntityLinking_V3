@@ -1,0 +1,14 @@
+[project]
+name = "dv-entity-linking"
+version = "0.0.0"
+description = "DV entity linking demo for Ops Copilot and Fault Agent entity workflows."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "Flask>=3,<4",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

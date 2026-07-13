@@ -1,0 +1,322 @@
+{
+  "metadata": {
+    "schema_version": "v1.alarm_query.2",
+    "query_count": 16,
+    "max_one_entity_mention_per_query": true
+  },
+  "queries": [
+    {
+      "id": "Q-001",
+      "query": "What is the possible causes of ALM-505001314?",
+      "mentions": [
+        {
+          "text": "505001314",
+          "span": [
+            35,
+            44
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-001"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-001"
+        }
+      ]
+    },
+    {
+      "id": "Q-002",
+      "query": "How to handle ALM-151 The CPU Usage Is High?",
+      "mentions": [
+        {
+          "text": "ALM-151 The CPU Usage Is High",
+          "span": [
+            14,
+            43
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-004"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-004"
+        }
+      ]
+    },
+    {
+      "id": "Q-003",
+      "query": "What does ALM-154 The Memory Usage Is Too High mean?",
+      "mentions": [
+        {
+          "text": "ALM-154 The Memory Usage Is Too High",
+          "span": [
+            10,
+            46
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-005"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-005"
+        }
+      ]
+    },
+    {
+      "id": "Q-004",
+      "query": "Why is The Disk Usage Is Too High reported?",
+      "mentions": [
+        {
+          "text": "The Disk Usage Is Too High",
+          "span": [
+            7,
+            33
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-006"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-006"
+        }
+      ]
+    },
+    {
+      "id": "Q-005",
+      "query": "What should I do if certificate is about to expire?",
+      "mentions": [
+        {
+          "text": "certificate is about to expire",
+          "span": [
+            20,
+            50
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-002",
+            "DV-ALM-003"
+          ]
+        }
+      ],
+      "expected_status": "ambiguous",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-002"
+        },
+        {
+          "entity_id": "DV-ALM-003"
+        }
+      ]
+    },
+    {
+      "id": "Q-006",
+      "query": "Check ALM-51020 impact.",
+      "mentions": [
+        {
+          "text": "ALM-51020",
+          "span": [
+            6,
+            15
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-002"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-002"
+        }
+      ]
+    },
+    {
+      "id": "Q-007",
+      "query": "What is alarm 100003?",
+      "mentions": [
+        {
+          "text": "100003",
+          "span": [
+            14,
+            20
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-003"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-003"
+        }
+      ]
+    },
+    {
+      "id": "Q-008",
+      "query": "Why did ALM-101207 happen?",
+      "mentions": [
+        {
+          "text": "ALM-101207",
+          "span": [
+            8,
+            18
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-007"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-007"
+        }
+      ]
+    },
+    {
+      "id": "Q-009",
+      "query": "How to handle ALM-493011404 ES Disk Usage Exceeds the Threshold?",
+      "mentions": [
+        {
+          "text": "ALM-493011404 ES Disk Usage Exceeds the Threshold",
+          "span": [
+            14,
+            63
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-008"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-008"
+        }
+      ]
+    },
+    {
+      "id": "Q-010",
+      "query": "What does ALM-999999993 The license has expired mean?",
+      "mentions": [
+        {
+          "text": "ALM-999999993 The license has expired",
+          "span": [
+            10,
+            47
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-009"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-009"
+        }
+      ]
+    },
+    {
+      "id": "Q-011",
+      "query": "Explain ALM-51020 The certificate is about to expire.",
+      "mentions": [
+        {
+          "text": "ALM-51020 The certificate is about to expire",
+          "span": [
+            8,
+            52
+          ],
+          "expected_entity_ids": [
+            "DV-ALM-002"
+          ]
+        }
+      ],
+      "expected_status": "linked",
+      "expected_entities": [
+        {
+          "entity_id": "DV-ALM-002"
+        }
+      ]
+    },
+    {
+      "id": "Q-012",
+      "query": "What is alarm 51?",
+      "mentions": [
+        {
+          "text": "51",
+          "span": [
+            14,
+            16
+          ],
+          "expected_entity_ids": []
+        }
+      ],
+      "expected_status": "no_match",
+      "expected_entities": [],
+      "negative_reason": "Short numeric alias must not match longer alarm ids such as ALM-151 or ALM-51020 by substring."
+    },
+    {
+      "id": "Q-013",
+      "query": "What is alarm 999?",
+      "mentions": [
+        {
+          "text": "999",
+          "span": [
+            14,
+            17
+          ],
+          "expected_entity_ids": []
+        }
+      ],
+      "expected_status": "no_match",
+      "expected_entities": [],
+      "negative_reason": "Unknown alarm number must not be linked to unrelated existing alarms."
+    },
+    {
+      "id": "Q-014",
+      "query": "Explain ALM-5102.",
+      "mentions": [
+        {
+          "text": "ALM-5102",
+          "span": [
+            8,
+            16
+          ],
+          "expected_entity_ids": []
+        }
+      ],
+      "expected_status": "no_match",
+      "expected_entities": [],
+      "negative_reason": "Partial alarm id must not match ALM-51020 by prefix or substring."
+    },
+    {
+      "id": "Q-015",
+      "query": "Show me the current system health summary.",
+      "mentions": [],
+      "expected_status": "not_required",
+      "expected_entities": [],
+      "negative_reason": "Query has no alarm entity mention and should bypass entity linking."
+    },
+    {
+      "id": "Q-016",
+      "query": "Open the operations dashboard.",
+      "mentions": [],
+      "expected_status": "not_required",
+      "expected_entities": [],
+      "negative_reason": "Navigation command has no alarm entity mention and should not force a match."
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "schema_version": "v1.alarm_entity.2",
+    "entity_type_scope": [
+      "alarm"
+    ],
+    "entity_count": 9
+  },
+  "entities": [
+    {
+      "entity_id": "DV-ALM-001",
+      "entity_type": "alarm",
+      "canonical_name": "ALM-505001314 The device management protocol is not configured or incorrectly configured",
+      "aliases": [
+        "505001314",
+        "ALM-505001314",
+        "The device management protocol is not configured or incorrectly configured"
+      ],
+      "description": "This alarm is reported when the device management protocol is not configured or incorrectly configured. For the detection principle, see Hardware Management."
+    },
+    {
+      "entity_id": "DV-ALM-002",
+      "entity_type": "alarm",
+      "canonical_name": "ALM-51020 The certificate is about to expire",
+      "aliases": [
+        "51020",
+        "ALM-51020",
+        "The certificate is about to expire",
+        "certificate is about to expire"
+      ],
+      "description": "This alarm indicates that a certificate is about to expire."
+    },
+    {
+      "entity_id": "DV-ALM-003",
+      "entity_type": "alarm",
+      "canonical_name": "ALM-100003 Certificate Is About to Expire",
+      "aliases": [
+        "100003",
+        "ALM-100003",
+        "Certificate Is About to Expire"
+      ],
+      "description": "This alarm indicates a certificate expiration warning."
+    },
+    {
+      "entity_id": "DV-ALM-004",
+      "entity_type": "alarm",
+      "canonical_name": "ALM-151 The CPU Usage Is High",
+      "aliases": [
+        "151",
+        "ALM-151",
+        "The CPU Usage Is High",
+        "CPU Usage Is High"
+      ],
+      "description": "This alarm indicates high CPU usage."
+    },
+    {
+      "entity_id": "DV-ALM-005",
+      "entity_type": "alarm",
+      "canonical_name": "ALM-154 The Memory Usage Is Too High",
+      "aliases": [
+        "154",
+        "ALM-154",
+        "The Memory Usage Is Too High",
+        "Memory Usage Is Too High"
+      ],
+      "description": "This alarm indicates high memory usage."
+    },
+    {
+      "entity_id": "DV-ALM-006",
+      "entity_type": "alarm",
+      "canonical_name": "ALM-36 The Disk Usage Is Too High",
+      "aliases": [
+        "36",
+        "ALM-36",
+        "The Disk Usage Is Too High",
+        "Disk Usage Is Too High"
+      ],
+      "description": "This alarm indicates high disk usage."
+    },
+    {
+      "entity_id": "DV-ALM-007",
+      "entity_type": "alarm",
+      "canonical_name": "ALM-101207 Alarm Receiving Failures Due to Device Disconnection",
+      "aliases": [
+        "101207",
+        "ALM-101207",
+        "Alarm Receiving Failures Due to Device Disconnection",
+        "Alarm Receiving Failures"
+      ],
+      "description": "This alarm indicates alarm receiving failures caused by device disconnection."
+    },
+    {
+      "entity_id": "DV-ALM-008",
+      "entity_type": "alarm",
+      "canonical_name": "ALM-493011404 ES Disk Usage Exceeds the Threshold",
+      "aliases": [
+        "493011404",
+        "ALM-493011404",
+        "ES Disk Usage Exceeds the Threshold"
+      ],
+      "description": "This alarm indicates ES disk usage exceeding the threshold."
+    },
+    {
+      "entity_id": "DV-ALM-009",
+      "entity_type": "alarm",
+      "canonical_name": "ALM-999999993 The license has expired",
+      "aliases": [
+        "999999993",
+        "ALM-999999993",
+        "The license has expired",
+        "license has expired"
+      ],
+      "description": "This alarm indicates that a license has expired."
+    }
+  ]
+}

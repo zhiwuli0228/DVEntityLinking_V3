@@ -1,0 +1,19 @@
+{
+  "schema_version": "v3.decision_confirmation.1",
+  "confirmed_at": "2026-06-24T18:14:23",
+  "redis_conflict_strategy": "推荐：保持 value 为单实体 ID；冲突数据加载 fail-closed，不进入链接链路",
+  "redis_conflict_notes": "保持 V3 初始范围简单，先不扩大 Redis value 结构。",
+  "redis_key_scope": "推荐：canonical_name + 经确认 aliases；不自动生成别名",
+  "redis_key_notes": "aliases 必须来自已确认样例或用户确认清单。",
+  "gauss_field_scope": "推荐：沿用最小字段 entity_id/entity_type/canonical_name/aliases/description",
+  "gauss_field_notes": "类型专属字段后续单独确认，V3 初始先稳住存储边界。",
+  "ner_schema_scope": "推荐：允许内部 schema 扩展；外部 API 和样例提交字段受控",
+  "ner_schema_notes": "内部 schema 用于 NER stage trace、storage lookup 和重构隔离。",
+  "llm_role": "推荐：默认离线 deterministic 可回归；LLM 作为可选分类/解释/rerank 增强",
+  "llm_notes": "默认验收不依赖真实 LLM，本地配置可做条件补证。",
+  "sample_strategy": "推荐：复用 V1/V2 样例，新增 Redis/Gauss Mock artifacts 和 NER golden cases",
+  "sample_notes": "新增样例必须保持脱敏和 D003 边界，不引入真实生产 payload。",
+  "signoff_name": "SL",
+  "signoff_decision": "确认以上 V3 决策，可据此修订 IR 并进入独立需求评审",
+  "signoff_notes": "TBD"
+}

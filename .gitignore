@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local configs and secrets
+config/*.local.*
+config/llm.local.json
+.env
+.env.*
+
+# Logs and runtime outputs
+*.log
+outputs/*
+!outputs/README.md
+!outputs/.gitkeep
+
+# Local real DV artifacts and payloads
+data/local_real_dv/
+samples/local_real_dv/
+outputs/local_real_dv/
+*.payload.local.json
+*.real-dv.local.json
+
+# Editors and OS
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
+
+# Frontend (web/frontend) build artifacts and local caches
+web/frontend/node_modules/
+web/frontend/dist/
+web/frontend/vite.config.js
+web/frontend/vite.config.d.ts
+web/frontend/*.tsbuildinfo
+.tmp/
+.npm-cache/

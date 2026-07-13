@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "name": "DVEntityLinking V0 L0 synthetic query samples",
+    "data_layer": "L0_SYNTHETIC",
+    "source": "mock_query_samples"
+  },
+  "queries": [
+    {"id": "Q-001", "category": "exact", "persona": "copilot", "query": "查看 DV RAN Site Alpha 的链路状态"},
+    {"id": "Q-002", "category": "alias", "persona": "copilot", "query": "RAN-A1 的 ASR 最近如何"},
+    {"id": "Q-003", "category": "alias", "persona": "fault_agent", "query": "Beta站点出现高时延告警"},
+    {"id": "Q-004", "category": "fuzzy", "persona": "copilot", "query": "查一下 Alpha Gateway 上联的问题"},
+    {"id": "Q-005", "category": "multi_entity", "persona": "fault_agent", "query": "DV RAN Site Alpha 的链路断告警和接入成功率一起看"},
+    {"id": "Q-006", "category": "ambiguous", "persona": "fault_agent", "query": "CP01 是什么告警"},
+    {"id": "Q-007", "category": "no_match", "persona": "copilot", "query": "查询不存在的 Gamma 虚拟设备"},
+    {"id": "Q-008", "category": "exact", "persona": "copilot", "query": "打开 Link Down Recovery Runbook"},
+    {"id": "Q-009", "category": "alias", "persona": "fault_agent", "query": "GW-E 丢包率升高"},
+    {"id": "Q-010", "category": "multi_entity", "persona": "copilot", "query": "比较 GW-E 和 GW-W 的 CPU负载"},
+    {"id": "Q-011", "category": "fuzzy", "persona": "fault_agent", "query": "处理 Alpha-Beta 链路异常"},
+    {"id": "Q-012", "category": "ambiguous", "persona": "copilot", "query": "帮我找 CP01 处理指南"}
+  ],
+  "retrieval_samples": [
+    {"id": "R-001", "entity_id": "NE-DV-RAN-001", "k": 5, "expected_reason": "topology neighbor"},
+    {"id": "R-002", "entity_id": "ALM-LINK-DOWN", "k": 5, "expected_reason": "knowledge/case relation"},
+    {"id": "R-003", "entity_id": "KPI-LATENCY-P95", "k": 5, "expected_reason": "description semantic overlap"},
+    {"id": "R-004", "entity_id": "NE-DV-CORE-001", "k": 5, "expected_reason": "same entity type"},
+    {"id": "R-005", "entity_id": "KB-CP01-DISAMBIGUATION", "k": 5, "expected_reason": "knowledge/case relation"},
+    {"id": "R-006", "entity_id": "NE-DV-RAN-001", "k": 5, "expected_reason": "name/alias similarity"}
+  ]
+}

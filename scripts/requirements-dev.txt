@@ -1,0 +1,4 @@
+# Dev-only dependencies for frontend visual evidence capture.
+# Not required to run the web demo or acceptance smoke; install only when
+# regenerating before/after browser screenshots.
+playwright>=1.45,<2
