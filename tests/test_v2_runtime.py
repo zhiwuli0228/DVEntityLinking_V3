@@ -5,19 +5,19 @@ from pathlib import Path
 
 import pytest
 
-from dv_entity_linking.catalog import CatalogRepository
-from dv_entity_linking.datasets import (
+from dv_entity_linking.legacy.catalog import CatalogRepository
+from dv_entity_linking.legacy.datasets import (
     QueryDataset,
     QueryDatasetError,
     QueryDatasetLoader,
     QueryMentionExpectation,
     QuerySample,
 )
-from dv_entity_linking.evaluation import evaluate_query_dataset
-from dv_entity_linking.llm import MockLLMClient
-from dv_entity_linking.models import EntityType, Status
-from dv_entity_linking.service import EntityLinkingService
-from dv_entity_linking.web import create_app
+from dv_entity_linking.legacy.evaluation import evaluate_query_dataset
+from dv_entity_linking.legacy.llm import MockLLMClient
+from dv_entity_linking.legacy.models import EntityType, Status
+from dv_entity_linking.legacy.service import EntityLinkingService
+from dv_entity_linking.legacy.web import create_app
 
 
 V2_ENTITY_PATH = Path("samples/real/v2_entity_examples.json")
@@ -44,7 +44,7 @@ def test_v2_catalog_and_query_dataset_load():
         EntityType.NE_TYPE.value: 2,
     }
     assert all(
-        not entity.aliases
+        not entity.alias
         for entity in repository.entities
         if entity.entity_type != EntityType.ALARM
     )

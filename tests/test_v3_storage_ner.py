@@ -7,14 +7,14 @@ from pathlib import Path
 
 import pytest
 
-from dv_entity_linking.models import ErrorCode, RunMode, Status, StorageLookupStatus
-from dv_entity_linking.service import EntityLinkingService
-from dv_entity_linking.storage import (
+from dv_entity_linking.legacy.models import ErrorCode, RunMode, Status, StorageLookupStatus
+from dv_entity_linking.legacy.service import EntityLinkingService
+from dv_entity_linking.legacy.storage import (
     EntityStorageRepository,
     StorageError,
     normalize_entity_word,
 )
-from dv_entity_linking.web import create_app
+from dv_entity_linking.legacy.web import create_app
 
 
 V3_GAUSS_PATH = Path("samples/real/v3_gauss_entities.json")
@@ -40,7 +40,7 @@ def test_v3_storage_repository_loads_two_layers():
     assert word_result.status == StorageLookupStatus.HIT
     assert word_result.entity_id == "DV-ALM-002"
     assert entity_result.status == StorageLookupStatus.HIT
-    assert entity_result.entity_record.canonical_name.startswith("ALM-51020")
+    assert entity_result.entity_record.entity_name.startswith("ALM-51020")
 
 
 def test_v3_gauss_duplicate_entity_id_fails_closed(tmp_path):
@@ -57,7 +57,7 @@ def test_v3_gauss_duplicate_entity_id_fails_closed(tmp_path):
 
 def test_v3_gauss_missing_required_field_fails_closed(tmp_path):
     gauss_payload = json.loads(V3_GAUSS_PATH.read_text(encoding="utf-8"))
-    del gauss_payload["entities"][0]["description"]
+    del gauss_payload["entities"][0]["desc"]
     gauss_path = tmp_path / "gauss.json"
     gauss_path.write_text(json.dumps(gauss_payload), encoding="utf-8")
 
@@ -65,6 +65,33 @@ def test_v3_gauss_missing_required_field_fails_closed(tmp_path):
         EntityStorageRepository.load_from_paths(gauss_path, V3_REDIS_PATH)
 
     assert exc_info.value.report.errors[0]["error_code"] == "missing_required_field"
+
+
+def test_v3_gauss_legacy_fields_and_dangling_relationship_fail_closed(tmp_path):
+    legacy_payload = json.loads(V3_GAUSS_PATH.read_text(encoding="utf-8"))
+    legacy = legacy_payload["entities"][0]
+    legacy["canonical_name"] = legacy.pop("entity_name")
+    legacy["aliases"] = legacy.pop("alias")
+    legacy["description"] = legacy.pop("desc")
+    legacy_path = tmp_path / "gauss-legacy.json"
+    legacy_path.write_text(json.dumps(legacy_payload), encoding="utf-8")
+
+    with pytest.raises(StorageError) as legacy_error:
+        EntityStorageRepository.load_from_paths(legacy_path, V3_REDIS_PATH)
+
+    assert legacy_error.value.report.errors[0]["error_code"] == "missing_required_field"
+
+    dangling_payload = json.loads(V3_GAUSS_PATH.read_text(encoding="utf-8"))
+    dangling_payload["entities"][0]["relationships"] = [
+        {"relation_type": "monitors", "target_entity_id": "MISSING"}
+    ]
+    dangling_path = tmp_path / "gauss-dangling.json"
+    dangling_path.write_text(json.dumps(dangling_payload), encoding="utf-8")
+
+    with pytest.raises(StorageError) as dangling_error:
+        EntityStorageRepository.load_from_paths(dangling_path, V3_REDIS_PATH)
+
+    assert any(error["error_code"] == "dangling_entity_id" for error in dangling_error.value.report.errors)
 
 
 def test_v3_redis_duplicate_key_conflict_fails_closed(tmp_path):
@@ -78,16 +105,20 @@ def test_v3_redis_duplicate_key_conflict_fails_closed(tmp_path):
             {
                 "entity_id": "E-1",
                 "entity_type": "alarm",
-                "canonical_name": "Entity One",
-                "aliases": ["Shared-Key"],
-                "description": "Entity one.",
+                "entity_name": "Entity One",
+                "alias": ["Shared-Key"],
+                "desc": "Entity one.",
+                "attributes": {},
+                "relationships": [],
             },
             {
                 "entity_id": "E-2",
                 "entity_type": "alarm",
-                "canonical_name": "Entity Two",
-                "aliases": ["Shared-Key"],
-                "description": "Entity two.",
+                "entity_name": "Entity Two",
+                "alias": ["Shared-Key"],
+                "desc": "Entity two.",
+                "attributes": {},
+                "relationships": [],
             },
         ],
     }
@@ -95,8 +126,8 @@ def test_v3_redis_duplicate_key_conflict_fails_closed(tmp_path):
         "metadata": {
             "schema_version": "v3.redis_entity_words.1",
             "normalization_version": "v3.entity_word_norm.1",
-            "key_scope": ["canonical_name", "confirmed_aliases"],
-            "aliases_auto_generated": False,
+            "key_scope": ["entity_name", "confirmed_alias"],
+            "alias_auto_generated": False,
             "word_count": 2,
         },
         "entity_words": [
@@ -143,7 +174,7 @@ def test_v3_redis_dangling_entity_id_fails_closed(tmp_path):
 def test_v3_redis_key_scope_metadata_fails_closed(tmp_path):
     gauss_payload = json.loads(V3_GAUSS_PATH.read_text(encoding="utf-8"))
     redis_payload = json.loads(V3_REDIS_PATH.read_text(encoding="utf-8"))
-    redis_payload["metadata"]["key_scope"] = ["auto_generated_aliases"]
+    redis_payload["metadata"]["key_scope"] = ["auto_generated_alias"]
     gauss_path = tmp_path / "gauss.json"
     redis_path = tmp_path / "redis.json"
     gauss_path.write_text(json.dumps(gauss_payload), encoding="utf-8")
@@ -230,6 +261,13 @@ def test_v3_web_api_uses_storage_backed_projection():
     ]
     assert linked["stage_trace"]
     assert linked["mention_results"][0]["storage_lookup"]["gauss_status"] == "hit"
+
+    entity_detail = client.get("/api/entities/DV-ALM-002").get_json()
+    assert entity_detail["entity_name"].startswith("ALM-51020")
+    assert entity_detail["relationships"] == [
+        {"relation_type": "monitors", "target_entity_id": "DV-KPI-MTK-001"}
+    ]
+    assert "canonical_name" not in entity_detail
 
 
 def test_v3_web_api_does_not_claim_llm_used_without_llm_stage():

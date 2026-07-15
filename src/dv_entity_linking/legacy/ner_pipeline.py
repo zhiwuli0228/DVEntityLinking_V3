@@ -230,7 +230,7 @@ class NerPipeline:
         )
         candidate = LinkCandidate(
             entity_id=entity.entity_id,
-            canonical_name=entity.canonical_name,
+            entity_name=entity.entity_name,
             entity_type=entity.entity_type,
             confidence=clamp_score(1.0),
             match_reason="storage exact entity-word match",

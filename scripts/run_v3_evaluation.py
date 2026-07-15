@@ -32,8 +32,8 @@ def _load_queries(path: str) -> dict[str, Any]:
 
 
 def _score_case(service, sample: dict[str, Any]) -> dict[str, Any]:
-    from dv_entity_linking.models import RunMode
-    from dv_entity_linking.storage import normalize_entity_word
+    from dv_entity_linking.legacy.models import RunMode
+    from dv_entity_linking.legacy.storage import normalize_entity_word
 
     result = service.link_query(str(sample.get("query", "")), mode=RunMode.OFFLINE_DEMO)
     expected_mentions = sample.get("mentions") or []
@@ -106,7 +106,7 @@ def _score_case(service, sample: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     args = parse_args()
     ensure_src_path()
-    from dv_entity_linking.service import EntityLinkingService
+    from dv_entity_linking.legacy.service import EntityLinkingService
 
     payload = _load_queries(args.queries)
     service = EntityLinkingService.from_v3_mock(

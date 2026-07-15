@@ -60,7 +60,7 @@ def setup_logging(log_dir: str | Path, name: str) -> tuple[logging.Logger, Path]
 
 def load_llm_config(config_path: str | Path, logger: logging.Logger):
     ensure_src_path()
-    from dv_entity_linking.llm import LLMConfig
+    from dv_entity_linking.legacy.llm import LLMConfig
 
     resolved = resolve_path(config_path)
     payload = json.loads(resolved.read_text(encoding="utf-8"))
@@ -109,10 +109,10 @@ def build_service(
     redis_mock_path: str | Path = "samples/real/v3_redis_entity_words.json",
 ):
     ensure_src_path()
-    from dv_entity_linking.catalog import CatalogRepository
-    from dv_entity_linking.llm import OpenAICompatibleLLMClient
-    from dv_entity_linking.models import RunMode
-    from dv_entity_linking.service import EntityLinkingService
+    from dv_entity_linking.legacy.catalog import CatalogRepository
+    from dv_entity_linking.legacy.llm import OpenAICompatibleLLMClient
+    from dv_entity_linking.legacy.models import RunMode
+    from dv_entity_linking.legacy.service import EntityLinkingService
 
     run_mode = RunMode(mode)
     if storage_mode == "v3_mock":

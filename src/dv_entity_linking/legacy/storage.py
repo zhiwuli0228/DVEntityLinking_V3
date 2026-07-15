@@ -10,10 +10,12 @@ from typing import Any
 
 from .models import (
     CatalogLoadResult,
+    DataLayer,
     EntityRecord,
     EntityType,
     EntityWordLookupResult,
     EntityWordRecord,
+    RelationshipRecord,
     StartupCheckReport,
     Status,
     StorageErrorCode,
@@ -27,8 +29,8 @@ from .models import (
 GAUSS_SCHEMA_VERSION = "v3.gauss_entities.1"
 REDIS_SCHEMA_VERSION = "v3.redis_entity_words.1"
 NORMALIZATION_VERSION = "v3.entity_word_norm.1"
-CONFIRMED_WORD_SOURCES = {"canonical_name", "confirmed_alias"}
-EXPECTED_KEY_SCOPE = ["canonical_name", "confirmed_aliases"]
+CONFIRMED_WORD_SOURCES = {"entity_name", "confirmed_alias"}
+EXPECTED_KEY_SCOPE = ["entity_name", "confirmed_alias"]
 
 
 class StorageError(ValueError):
@@ -132,6 +134,18 @@ class GaussEntityStoreMock:
                 )
             )
 
+        entity_ids = {record.entity_id for record in records}
+        for record in records:
+            for relationship in record.relationships:
+                if relationship.target_entity_id not in entity_ids:
+                    errors.append(
+                        _error(
+                            f"entities[{record.entity_id}].relationships",
+                            StorageErrorCode.DANGLING_ENTITY_ID,
+                            f"relationship target entity_id not found: {relationship.target_entity_id}",
+                        )
+                    )
+
         if errors:
             report = StartupCheckReport(
                 status=StorageStartupStatus.FAILED,
@@ -184,7 +198,7 @@ class GaussEntityStoreMock:
         field_prefix: str,
         errors: list[dict[str, str]],
     ) -> StructuredEntityRecord | None:
-        required = ["entity_id", "entity_type", "canonical_name", "aliases", "description"]
+        required = ["entity_id", "entity_type", "entity_name", "alias", "desc", "attributes", "relationships"]
         missing = [field for field in required if field not in item]
         if missing:
             errors.append(
@@ -195,16 +209,47 @@ class GaussEntityStoreMock:
                 )
             )
             return None
-        aliases = item.get("aliases")
-        if not isinstance(aliases, list) or not all(isinstance(alias, str) for alias in aliases):
+        alias = item.get("alias")
+        if not isinstance(alias, list) or not all(isinstance(alias, str) for alias in alias):
             errors.append(
                 _error(
-                    f"{field_prefix}.aliases",
+                    f"{field_prefix}.alias",
                     StorageErrorCode.SCHEMA_ERROR,
-                    "aliases must be list[string]",
+                    "alias must be list[string]",
                 )
             )
             return None
+        attributes = item.get("attributes")
+        if not isinstance(attributes, dict) or not all(isinstance(key, str) for key in attributes):
+            errors.append(_error(f"{field_prefix}.attributes", StorageErrorCode.SCHEMA_ERROR, "attributes must be object with string keys"))
+            return None
+        try:
+            json.dumps(attributes)
+        except (TypeError, ValueError):
+            errors.append(_error(f"{field_prefix}.attributes", StorageErrorCode.SCHEMA_ERROR, "attributes must be JSON-compatible"))
+            return None
+        raw_relationships = item.get("relationships")
+        if not isinstance(raw_relationships, list):
+            errors.append(_error(f"{field_prefix}.relationships", StorageErrorCode.SCHEMA_ERROR, "relationships must be list"))
+            return None
+        relationships: list[RelationshipRecord] = []
+        seen_relationships: set[tuple[str, str]] = set()
+        for relationship_index, relationship in enumerate(raw_relationships):
+            relationship_field = f"{field_prefix}.relationships[{relationship_index}]"
+            if not isinstance(relationship, dict):
+                errors.append(_error(relationship_field, StorageErrorCode.SCHEMA_ERROR, "relationship must be object"))
+                continue
+            relation_type = relationship.get("relation_type")
+            target_entity_id = relationship.get("target_entity_id")
+            if not isinstance(relation_type, str) or not relation_type.strip() or not isinstance(target_entity_id, str) or not target_entity_id.strip():
+                errors.append(_error(relationship_field, StorageErrorCode.SCHEMA_ERROR, "relationship requires non-empty relation_type and target_entity_id"))
+                continue
+            key = (relation_type.casefold(), target_entity_id)
+            if key in seen_relationships:
+                errors.append(_error(relationship_field, StorageErrorCode.DUPLICATE_KEY, "duplicate relationship"))
+                continue
+            seen_relationships.add(key)
+            relationships.append(RelationshipRecord(target_entity_id=target_entity_id, relation_type=relation_type, source="v3_gauss_mock", data_layer=DataLayer.L1_SANITIZED))
         try:
             entity_type = EntityType(item["entity_type"])
         except ValueError:
@@ -216,7 +261,7 @@ class GaussEntityStoreMock:
                 )
             )
             return None
-        values = {key: item.get(key) for key in ["entity_id", "canonical_name", "description"]}
+        values = {key: item.get(key) for key in ["entity_id", "entity_name", "desc"]}
         non_strings = [key for key, value in values.items() if not isinstance(value, str)]
         if non_strings:
             errors.append(
@@ -227,21 +272,23 @@ class GaussEntityStoreMock:
                 )
             )
             return None
-        if not item["entity_id"].strip() or not item["canonical_name"].strip() or not item["description"].strip():
+        if not item["entity_id"].strip() or not item["entity_name"].strip() or not item["desc"].strip():
             errors.append(
                 _error(
                     field_prefix,
                     StorageErrorCode.MISSING_REQUIRED_FIELD,
-                    "entity_id, canonical_name, and description must be non-empty",
+                    "entity_id, entity_name, and desc must be non-empty",
                 )
             )
             return None
         return StructuredEntityRecord(
             entity_id=str(item["entity_id"]),
             entity_type=entity_type,
-            canonical_name=str(item["canonical_name"]),
-            aliases=list(aliases),
-            description=str(item["description"]),
+            entity_name=str(item["entity_name"]),
+            alias=list(alias),
+            desc=str(item["desc"]),
+            attributes=dict(attributes),
+            relationships=relationships,
         )
 
 
@@ -295,12 +342,12 @@ class RedisEntityWordCacheMock:
                     f"normalization_version must be {NORMALIZATION_VERSION}",
                 )
             )
-        if metadata.get("aliases_auto_generated") is not False:
+        if metadata.get("alias_auto_generated") is not False:
             errors.append(
                 _error(
-                    "metadata.aliases_auto_generated",
+                    "metadata.alias_auto_generated",
                     StorageErrorCode.UNCONFIRMED_DATA_LAYER,
-                    "aliases_auto_generated must be false",
+                    "alias_auto_generated must be false",
                 )
             )
         if metadata.get("key_scope") != EXPECTED_KEY_SCOPE:
@@ -308,7 +355,7 @@ class RedisEntityWordCacheMock:
                 _error(
                     "metadata.key_scope",
                     StorageErrorCode.UNCONFIRMED_DATA_LAYER,
-                    "key_scope must be ['canonical_name', 'confirmed_aliases']",
+                    "key_scope must be ['entity_name', 'confirmed_alias']",
                 )
             )
         if not isinstance(raw_words, list):
@@ -469,7 +516,7 @@ class RedisEntityWordCacheMock:
                 _error(
                     f"{field_prefix}.source",
                     StorageErrorCode.UNCONFIRMED_DATA_LAYER,
-                    "source must be canonical_name or confirmed_alias",
+                    "source must be entity_name or confirmed_alias",
                 )
             )
             return None
@@ -488,7 +535,7 @@ class RedisEntityWordCacheMock:
                 _error(
                     f"{field_prefix}.entity_word",
                     StorageErrorCode.UNCONFIRMED_DATA_LAYER,
-                    "entity_word must be canonical_name or a confirmed alias of the referenced entity",
+                    "entity_word must be entity_name or a confirmed alias of the referenced entity",
                 )
             )
             return None
@@ -507,9 +554,9 @@ class RedisEntityWordCacheMock:
         entity: StructuredEntityRecord,
     ) -> bool:
         normalized_word = normalize_entity_word(entity_word)
-        if source == "canonical_name":
-            return normalized_word == normalize_entity_word(entity.canonical_name)
-        return normalized_word in {normalize_entity_word(alias) for alias in entity.aliases}
+        if source == "entity_name":
+            return normalized_word == normalize_entity_word(entity.entity_name)
+        return normalized_word in {normalize_entity_word(alias) for alias in entity.alias}
 
 
 class EntityStorageRepository:
@@ -616,7 +663,7 @@ class V3CatalogAdapter:
         for entity in self.entities:
             if type_filter and entity.entity_type != type_filter:
                 continue
-            names = [entity.canonical_name, *entity.aliases]
+            names = [entity.entity_name, *entity.alias]
             if any(needle in normalize_entity_word(name) or normalize_entity_word(name) in needle for name in names):
                 matches.append(entity)
             if len(matches) >= limit:

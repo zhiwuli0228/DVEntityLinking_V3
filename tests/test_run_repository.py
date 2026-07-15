@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import json
 
-from dv_entity_linking.evaluation import (
+from dv_entity_linking.legacy.evaluation import (
     FORBIDDEN_KEY_PARTS,
     RunRepository,
     build_run_record,
 )
-from dv_entity_linking.models import RunMode
+from dv_entity_linking.legacy.models import RunMode
 
 
 def test_run_repository_redacts_forbidden_keys(tmp_path):

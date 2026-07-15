@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from dv_entity_linking.catalog import CatalogRepository
-from dv_entity_linking.service import EntityLinkingService
+from dv_entity_linking.legacy.catalog import CatalogRepository
+from dv_entity_linking.legacy.service import EntityLinkingService
 
 
 @pytest.fixture()
@@ -23,4 +23,3 @@ def catalog(catalog_path: Path) -> CatalogRepository:
 @pytest.fixture()
 def service(catalog: CatalogRepository) -> EntityLinkingService:
     return EntityLinkingService(catalog)
-

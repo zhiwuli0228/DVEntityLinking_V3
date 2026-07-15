@@ -665,7 +665,7 @@ def _index_html(default_query: str, default_run_mode: RunMode) -> str:
       const mentionCount = (payload.mention_results || []).length;
       const linkedCount = (payload.mention_results || []).filter((item) => item.linked_entity).length;
       const reason = payload.disambiguation_reason || payload.no_match_reason || payload.bypass_reason || payload.safe_summary || payload.status || "";
-      const title = entity ? `${entity.entity_id} · ${entity.canonical_name}` : "-";
+      const title = entity ? `${entity.entity_id} · ${entity.entity_name}` : "-";
       document.getElementById("result-summary").innerHTML = `
         <div class="panel-title">
           <div>
@@ -730,7 +730,7 @@ def _index_html(default_query: str, default_run_mode: RunMode) -> str:
         <li>
           <button class="item candidate-card${active}" type="button" data-testid="candidate-card" data-candidate-id="${esc(item.entity_id)}" aria-pressed="${state.selectedCandidateId === item.entity_id}">
             <strong>${esc(item.entity_id)}</strong><br>
-            ${esc(item.canonical_name)}<br>
+            ${esc(item.entity_name)}<br>
             <span class="meta">${esc(item.entity_type)} · score ${esc(item.confidence ?? item.score ?? "-")} · ${esc(item.match_reason || "")}</span>
           </button>
         </li>`;
@@ -760,8 +760,8 @@ def _index_html(default_query: str, default_run_mode: RunMode) -> str:
       const rows = items.map((item) => `
         <li>
           <button class="item catalog-card${state.selectedEntityId === item.entity_id ? " is-active" : ""}" type="button" data-testid="catalog-entity-card" data-entity-id="${esc(item.entity_id)}">
-            <strong>${esc(item.entity_id)}</strong> ${esc(item.canonical_name)}
-            <br><span class="meta">${esc(item.entity_type)} · aliases ${esc((item.aliases || []).length)}</span>
+            <strong>${esc(item.entity_id)}</strong> ${esc(item.entity_name)}
+            <br><span class="meta">${esc(item.entity_type)} · alias ${esc((item.alias || []).length)}</span>
           </button>
         </li>`).join("");
       document.getElementById("entity-catalog").innerHTML = `
@@ -796,10 +796,10 @@ def _index_html(default_query: str, default_run_mode: RunMode) -> str:
         <dl class="summary-grid">
           <div class="metric"><dt>entity_id</dt><dd>${esc(payload.entity_id)}</dd></div>
           <div class="metric"><dt>entity_type</dt><dd>${esc(payload.entity_type)}</dd></div>
-          <div class="metric"><dt>canonical_name</dt><dd>${esc(payload.canonical_name)}</dd></div>
-          <div class="metric"><dt>aliases</dt><dd>${esc((payload.aliases || []).join(", ") || "-")}</dd></div>
+          <div class="metric"><dt>entity_name</dt><dd>${esc(payload.entity_name)}</dd></div>
+          <div class="metric"><dt>alias</dt><dd>${esc((payload.alias || []).join(", ") || "-")}</dd></div>
         </dl>
-        <p class="muted">${esc(payload.description || "")}</p>
+        <p class="muted">${esc(payload.desc || "")}</p>
         <h3>safe attributes</h3>
         ${attrs ? `<ul class="list">${attrs}</ul>` : '<p class="muted">No safe attributes.</p>'}
         <p class="meta">omitted_attribute_count: ${esc(payload.omitted_attribute_count || 0)}</p>`;
@@ -807,7 +807,7 @@ def _index_html(default_query: str, default_run_mode: RunMode) -> str:
     const renderRetrieval = (payload) => {
       const rows = (payload.items || []).map((item) => `
         <li class="item">
-          <strong>${esc(item.entity_id)}</strong> ${esc(item.canonical_name)}
+          <strong>${esc(item.entity_id)}</strong> ${esc(item.entity_name)}
           <br><span class="meta">${esc(item.entity_type)} · ${esc(item.similarity_reason)}</span>
         </li>`).join("");
       document.getElementById("retrieval-result").innerHTML = `
@@ -1152,7 +1152,7 @@ def _safe_candidate(candidate: LinkCandidate) -> dict:
     return {
         "entity_id": candidate.entity_id,
         "candidate_id": candidate.entity_id,
-        "canonical_name": candidate.canonical_name,
+        "entity_name": candidate.entity_name,
         "entity_type": candidate.entity_type.value,
         "confidence": candidate.confidence,
         "score": candidate.confidence,
@@ -1167,9 +1167,16 @@ def _safe_entity(entity: EntityRecord | None, *, include_attributes: bool = Fals
     payload = {
         "entity_id": entity.entity_id,
         "entity_type": entity.entity_type.value,
-        "canonical_name": entity.canonical_name,
-        "aliases": list(entity.aliases),
-        "description": entity.description,
+        "entity_name": entity.entity_name,
+        "alias": list(entity.alias),
+        "desc": entity.desc,
+        "relationships": [
+            {
+                "relation_type": relationship.relation_type,
+                "target_entity_id": relationship.target_entity_id,
+            }
+            for relationship in entity.relationships
+        ],
         "source": entity.source,
         "data_layer": entity.data_layer.value,
     }
@@ -1226,7 +1233,7 @@ def _safe_attribute_value(value: Any) -> Any:
 def _safe_retrieval_item(item: RetrievalItem) -> dict:
     return {
         "entity_id": item.entity_id,
-        "canonical_name": item.canonical_name,
+        "entity_name": item.entity_name,
         "entity_type": item.entity_type.value,
         "score": item.score,
         "similarity_reason": item.similarity_reason,
@@ -1422,7 +1429,7 @@ def _render_result_summary(value: dict) -> str:
     linked_count = sum(1 for item in value.get("mention_results", []) if item.get("linked_entity"))
     title = "-"
     if entity.get("entity_id"):
-        title = f'{entity.get("entity_id")} · {entity.get("canonical_name", "")}'
+        title = f'{entity.get("entity_id")} · {entity.get("entity_name", "")}'
     reason = (
         value.get("disambiguation_reason")
         or value.get("no_match_reason")
@@ -1494,7 +1501,7 @@ def _render_entity_catalog(value: list[dict]) -> str:
             '<li><button class="item catalog-card" type="button" data-entity-id="'
             f'{escape(str(item.get("entity_id", "")), quote=True)}">'
             f'<strong>{escape(str(item.get("entity_id", "")))}</strong> '
-            f'{escape(str(item.get("canonical_name", "")))}'
+            f'{escape(str(item.get("entity_name", "")))}'
             f'<br><span class="meta">{escape(str(item.get("entity_type", "")))}</span>'
             "</button></li>"
         )
@@ -1516,7 +1523,7 @@ def _render_candidate_list(value: list[dict]) -> str:
             '<li><button class="item candidate-card" type="button" data-testid="candidate-card" data-candidate-id="'
             f'{escape(str(item.get("entity_id", "")), quote=True)}">'
             f'<strong>{escape(str(item.get("entity_id", "")))}</strong><br>'
-            f'{escape(str(item.get("canonical_name", "")))}<br>'
+            f'{escape(str(item.get("entity_name", "")))}<br>'
             f'<span class="meta">{escape(str(item.get("match_reason", "")))}</span>'
             "</button></li>"
         )
@@ -1551,10 +1558,10 @@ def _render_entity_detail(value: dict) -> str:
         '<p class="panel-kicker">Entity detail zone</p><h2>实体详情</h2><dl class="summary-grid">'
         f'<div class="metric"><dt>实体ID</dt><dd>{escape(str(value.get("entity_id", "")))}</dd></div>'
         f'<div class="metric"><dt>实体类型</dt><dd>{escape(str(value.get("entity_type", "")))}</dd></div>'
-        f'<div class="metric"><dt>标准名称</dt><dd>{escape(str(value.get("canonical_name", "")))}</dd></div>'
-        f'<div class="metric"><dt>别名</dt><dd>{escape(", ".join(value.get("aliases", [])) or "-")}</dd></div>'
+        f'<div class="metric"><dt>标准名称</dt><dd>{escape(str(value.get("entity_name", "")))}</dd></div>'
+        f'<div class="metric"><dt>别名</dt><dd>{escape(", ".join(value.get("alias", [])) or "-")}</dd></div>'
         "</dl>"
-        f'<p class="muted">{escape(str(value.get("description", "")))}</p>'
+        f'<p class="muted">{escape(str(value.get("desc", "")))}</p>'
         f"<h3>safe attributes</h3>{attr_body}"
         f'<p class="meta">omitted_attribute_count: {escape(str(value.get("omitted_attribute_count", 0)))}</p></section>'
     )
@@ -1565,7 +1572,7 @@ def _render_retrieval_result(value: dict) -> str:
         (
             '<li class="item">'
             f'<strong>{escape(str(item.get("entity_id", "")))}</strong> '
-            f'{escape(str(item.get("canonical_name", "")))}'
+            f'{escape(str(item.get("entity_name", "")))}'
             f'<br><span class="meta">{escape(str(item.get("similarity_reason", "")))}</span>'
             "</li>"
         )

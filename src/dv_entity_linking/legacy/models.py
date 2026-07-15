@@ -109,7 +109,7 @@ class StorageErrorCode(StrEnum):
 
 
 @dataclass(frozen=True)
-class RelationRecord:
+class RelationshipRecord:
     target_entity_id: str
     relation_type: str
     source: str
@@ -120,11 +120,11 @@ class RelationRecord:
 class EntityRecord:
     entity_id: str
     entity_type: EntityType
-    canonical_name: str
-    aliases: list[str] = field(default_factory=list)
-    description: str = ""
+    entity_name: str
+    alias: list[str] = field(default_factory=list)
+    desc: str = ""
     attributes: dict[str, Any] = field(default_factory=dict)
-    relations: list[RelationRecord] = field(default_factory=list)
+    relationships: list[RelationshipRecord] = field(default_factory=list)
     data_layer: DataLayer = DataLayer.L0_SYNTHETIC
     source: str = "mock_catalog"
 
@@ -140,7 +140,7 @@ class EntityMention:
 @dataclass(frozen=True)
 class LinkCandidate:
     entity_id: str
-    canonical_name: str
+    entity_name: str
     entity_type: EntityType
     confidence: float
     match_reason: str
@@ -153,18 +153,22 @@ class LinkCandidate:
 class StructuredEntityRecord:
     entity_id: str
     entity_type: EntityType
-    canonical_name: str
-    aliases: list[str] = field(default_factory=list)
-    description: str = ""
+    entity_name: str
+    alias: list[str] = field(default_factory=list)
+    desc: str = ""
+    attributes: dict[str, Any] = field(default_factory=dict)
+    relationships: list[RelationshipRecord] = field(default_factory=list)
     source: str = "v3_gauss_mock"
 
     def to_entity_record(self) -> EntityRecord:
         return EntityRecord(
             entity_id=self.entity_id,
             entity_type=self.entity_type,
-            canonical_name=self.canonical_name,
-            aliases=list(self.aliases),
-            description=self.description,
+            entity_name=self.entity_name,
+            alias=list(self.alias),
+            desc=self.desc,
+            attributes=dict(self.attributes),
+            relationships=list(self.relationships),
             data_layer=DataLayer.L1_SANITIZED,
             source=self.source,
         )
@@ -246,7 +250,7 @@ class EntityLinkResult:
 @dataclass(frozen=True)
 class RetrievalItem:
     entity_id: str
-    canonical_name: str
+    entity_name: str
     entity_type: EntityType
     score: float
     similarity_reason: str

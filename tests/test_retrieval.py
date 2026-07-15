@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from dv_entity_linking.models import Status
+from dv_entity_linking.legacy.models import Status
 
 
 def test_top_k_retrieval_returns_required_item_fields(service):
@@ -14,7 +14,7 @@ def test_top_k_retrieval_returns_required_item_fields(service):
     assert result.items
     first = result.items[0]
     assert first.entity_id
-    assert first.canonical_name
+    assert first.entity_name
     assert first.entity_type
     assert 0.0 <= first.score <= 1.0
     assert first.similarity_reason
