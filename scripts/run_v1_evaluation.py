@@ -18,10 +18,10 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     ensure_src_path()
-    from dv_entity_linking.catalog import CatalogRepository
-    from dv_entity_linking.datasets import QueryDatasetLoader
-    from dv_entity_linking.evaluation import evaluate_query_dataset
-    from dv_entity_linking.service import EntityLinkingService
+    from dv_entity_linking.legacy.catalog import CatalogRepository
+    from dv_entity_linking.legacy.datasets import QueryDatasetLoader
+    from dv_entity_linking.legacy.evaluation import evaluate_query_dataset
+    from dv_entity_linking.legacy.service import EntityLinkingService
 
     catalog = CatalogRepository(
         resolve_path(args.catalog),

@@ -13,7 +13,7 @@ from .models import (
     EntityRecord,
     EntityType,
     ErrorCode,
-    RelationRecord,
+    RelationshipRecord,
     Status,
 )
 
@@ -62,7 +62,7 @@ class CatalogRepository:
             records = self._read_records()
             self._validate_metadata(records)
             self._validate_layers(records)
-            self._validate_relations(records)
+            self._validate_relationships(records)
         except CatalogError:
             raise
         except Exception as exc:  # pragma: no cover - defensive wrapper
@@ -73,7 +73,7 @@ class CatalogRepository:
         self._type_index.clear()
         for record in records:
             self._type_index[record.entity_type].append(record.entity_id)
-            for name in [record.canonical_name, *record.aliases]:
+            for name in [record.entity_name, *record.alias]:
                 self._name_index[normalize_text(name)].add(record.entity_id)
 
         counts = Counter(record.entity_type.value for record in records)
@@ -123,7 +123,7 @@ class CatalogRepository:
                 continue
             if type_filter and record.entity_type != type_filter:
                 continue
-            names = [record.canonical_name, *record.aliases]
+            names = [record.entity_name, *record.alias]
             if any(needle in normalize_text(name) or normalize_text(name) in needle for name in names):
                 matches.append(record)
                 seen.add(record.entity_id)
@@ -137,7 +137,7 @@ class CatalogRepository:
             return []
         return [
             self._entities[relation.target_entity_id]
-            for relation in record.relations
+            for relation in record.relationships
             if relation.target_entity_id in self._entities
         ]
 
@@ -239,42 +239,42 @@ class CatalogRepository:
                 ErrorCode.CATALOG_LOAD_FAILED,
                 f"v1 alarm catalog contains non-alarm entities: {invalid_types}",
             )
-        missing_descriptions = [
-            record.entity_id for record in records if not record.description.strip()
+        missing_descs = [
+            record.entity_id for record in records if not record.desc.strip()
         ]
-        if missing_descriptions:
+        if missing_descs:
             raise CatalogError(
                 ErrorCode.CATALOG_LOAD_FAILED,
-                f"v1 alarm catalog entities require description: {missing_descriptions}",
+                f"v1 alarm catalog entities require desc: {missing_descs}",
             )
-        duplicate_aliases = [
+        duplicate_alias = [
             record.entity_id
             for record in records
-            if len({normalize_text(alias) for alias in record.aliases}) != len(record.aliases)
+            if len({normalize_text(alias) for alias in record.alias}) != len(record.alias)
         ]
-        if duplicate_aliases:
+        if duplicate_alias:
             raise CatalogError(
                 ErrorCode.CATALOG_LOAD_FAILED,
-                f"duplicate aliases within alarm entities: {duplicate_aliases}",
+                f"duplicate alias within alarm entities: {duplicate_alias}",
             )
 
     def _record_from_dict(self, item: dict) -> EntityRecord:
-        required = ["entity_id", "entity_type", "canonical_name", "aliases"]
+        required = ["entity_id", "entity_type", "entity_name", "alias"]
         missing = [field for field in required if field not in item]
         if missing:
             raise CatalogError(
                 ErrorCode.CATALOG_LOAD_FAILED,
                 f"missing required entity fields: {missing}",
             )
-        relations = [self._relation_from_dict(relation) for relation in item.get("relations", [])]
+        relationships = [self._relationship_from_dict(relationship) for relationship in item.get("relationships", [])]
         return EntityRecord(
             entity_id=str(item["entity_id"]),
             entity_type=EntityType(item["entity_type"]),
-            canonical_name=str(item["canonical_name"]),
-            aliases=[str(alias) for alias in item.get("aliases", [])],
-            description=str(item.get("description", "")),
+            entity_name=str(item["entity_name"]),
+            alias=[str(alias) for alias in item.get("alias", [])],
+            desc=str(item.get("desc", "")),
             attributes=dict(item.get("attributes", {})),
-            relations=relations,
+            relationships=relationships,
             data_layer=self._record_data_layer(item),
             source=str(item.get("source") or self._metadata.get("source") or "catalog"),
         )
@@ -316,35 +316,35 @@ class CatalogRepository:
                 ErrorCode.CATALOG_LOAD_FAILED,
                 f"v2 catalog contains unsupported entity types: {invalid_types}",
             )
-        if self._metadata.get("aliases_default_empty") is True:
-            alias_entities = [record.entity_id for record in v2_records if record.aliases]
+        if self._metadata.get("alias_default_empty") is True:
+            alias_entities = [record.entity_id for record in v2_records if record.alias]
             if alias_entities:
                 raise CatalogError(
                     ErrorCode.CATALOG_LOAD_FAILED,
-                    f"v2 aliases require explicit confirmation: {alias_entities}",
+                    f"v2 alias require explicit confirmation: {alias_entities}",
                 )
-        missing_descriptions = [
-            record.entity_id for record in records if not record.description.strip()
+        missing_descs = [
+            record.entity_id for record in records if not record.desc.strip()
         ]
-        if missing_descriptions:
+        if missing_descs:
             raise CatalogError(
                 ErrorCode.CATALOG_LOAD_FAILED,
-                f"v2 catalog entities require description: {missing_descriptions}",
+                f"v2 catalog entities require desc: {missing_descs}",
             )
 
-    def _relation_from_dict(self, relation: dict) -> RelationRecord:
-        required = ["target_entity_id", "relation_type", "source", "data_layer"]
-        missing = [field for field in required if field not in relation]
+    def _relationship_from_dict(self, relationship: dict) -> RelationshipRecord:
+        required = ["target_entity_id", "relation_type"]
+        missing = [field for field in required if field not in relationship]
         if missing:
             raise CatalogError(
                 ErrorCode.CATALOG_LOAD_FAILED,
-                f"missing required relation fields: {missing}",
+                f"missing required relationship fields: {missing}",
             )
-        return RelationRecord(
-            target_entity_id=str(relation["target_entity_id"]),
-            relation_type=str(relation["relation_type"]),
-            source=str(relation["source"]),
-            data_layer=DataLayer(relation["data_layer"]),
+        return RelationshipRecord(
+            target_entity_id=str(relationship["target_entity_id"]),
+            relation_type=str(relationship["relation_type"]),
+            source=str(relationship.get("source") or "catalog"),
+            data_layer=DataLayer(relationship.get("data_layer") or DataLayer.L0_SYNTHETIC),
         )
 
     def _validate_layers(self, records: list[EntityRecord]) -> None:
@@ -383,16 +383,16 @@ class CatalogRepository:
             )
         return False
 
-    def _validate_relations(self, records: list[EntityRecord]) -> None:
+    def _validate_relationships(self, records: list[EntityRecord]) -> None:
         ids = {record.entity_id for record in records}
         invalid = [
             (record.entity_id, relation.target_entity_id)
             for record in records
-            for relation in record.relations
+            for relation in record.relationships
             if relation.target_entity_id not in ids
         ]
         if invalid:
             raise CatalogError(
                 ErrorCode.CATALOG_LOAD_FAILED,
-                f"relations reference unknown entities: {invalid}",
+                f"relationships reference unknown entities: {invalid}",
             )

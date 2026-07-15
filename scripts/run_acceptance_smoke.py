@@ -110,7 +110,7 @@ def main() -> int:
     args = parse_args()
     logger, log_file = setup_logging(args.log_dir, "acceptance-smoke")
     ensure_src_path()
-    from dv_entity_linking.web import create_app
+    from dv_entity_linking.legacy.web import create_app
 
     service, run_mode = build_service(
         catalog_path=args.catalog,

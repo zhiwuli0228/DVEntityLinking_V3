@@ -179,7 +179,7 @@ class EntityExtractor:
         for entity in self.catalog.entities:
             if entity_type_hints and entity.entity_type not in entity_type_hints:
                 continue
-            for name in [entity.canonical_name, *entity.aliases]:
+            for name in [entity.entity_name, *entity.alias]:
                 for start, end in self._literal_spans(query, name):
                     matches.append((start, end, query[start:end], entity.entity_type))
 
@@ -221,7 +221,7 @@ class EntityExtractor:
         for entity in self.catalog.entities:
             if entity.entity_type != EntityType.ALARM:
                 continue
-            for name in [entity.canonical_name, *entity.aliases]:
+            for name in [entity.entity_name, *entity.alias]:
                 for start, end in self._literal_spans(query, name):
                     matches.append((start, end, query[start:end], EntityType.ALARM))
 

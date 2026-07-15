@@ -214,14 +214,14 @@ class EntityLinker:
         for entity in self.catalog.entities:
             if mention.predicted_type and entity.entity_type != mention.predicted_type:
                 continue
-            names = [entity.canonical_name, *entity.aliases]
+            names = [entity.entity_name, *entity.alias]
             best_score = 0.0
             best_reason = ""
             for name in names:
                 normalized_name = normalize_text(name)
                 if normalized_mention == normalized_name:
-                    score = 0.99 if name == entity.canonical_name else 0.92
-                    reason = "canonical name match" if name == entity.canonical_name else "alias match"
+                    score = 0.99 if name == entity.entity_name else 0.92
+                    reason = "canonical name match" if name == entity.entity_name else "alias match"
                 elif normalized_mention in normalized_name or normalized_name in normalized_mention:
                     score = 0.78
                     reason = "partial name match"
@@ -237,7 +237,7 @@ class EntityLinker:
                 candidates.append(
                     LinkCandidate(
                         entity_id=entity.entity_id,
-                        canonical_name=entity.canonical_name,
+                        entity_name=entity.entity_name,
                         entity_type=entity.entity_type,
                         confidence=clamp_score(best_score),
                         match_reason=best_reason,
@@ -257,7 +257,7 @@ class EntityLinker:
         candidate_summary = [
             {
                 "entity_id": candidate.entity_id,
-                "canonical_name": candidate.canonical_name,
+                "entity_name": candidate.entity_name,
                 "entity_type": candidate.entity_type.value,
                 "confidence": candidate.confidence,
                 "match_reason": candidate.match_reason,

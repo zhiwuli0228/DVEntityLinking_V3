@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import json
 
-from dv_entity_linking.catalog import CatalogRepository
-from dv_entity_linking.linking import EntityLinker
-from dv_entity_linking.llm import MockLLMClient
-from dv_entity_linking.models import (
+from dv_entity_linking.legacy.catalog import CatalogRepository
+from dv_entity_linking.legacy.linking import EntityLinker
+from dv_entity_linking.legacy.llm import MockLLMClient
+from dv_entity_linking.legacy.models import (
     DataLayer,
     EntityMention,
     EntityType,
@@ -14,7 +14,7 @@ from dv_entity_linking.models import (
     RunMode,
     Status,
 )
-from dv_entity_linking.service import EntityLinkingService
+from dv_entity_linking.legacy.service import EntityLinkingService
 
 
 class RecordingLLMClient(MockLLMClient):
@@ -312,18 +312,18 @@ def test_non_l0_ambiguous_result_reports_candidate_data_layer(tmp_path):
                     {
                         "entity_id": "L1-A",
                         "entity_type": "alarm_event",
-                        "canonical_name": "CP01 Control",
-                        "aliases": ["CP01"],
-                        "relations": [],
+                        "entity_name": "CP01 Control",
+                        "alias": ["CP01"],
+                        "relationships": [],
                         "data_layer": "L1_SANITIZED",
                         "source": "user_sanitized_sample",
                     },
                     {
                         "entity_id": "L1-B",
                         "entity_type": "alarm_event",
-                        "canonical_name": "CP01 Power",
-                        "aliases": ["CP01"],
-                        "relations": [],
+                        "entity_name": "CP01 Power",
+                        "alias": ["CP01"],
+                        "relationships": [],
                         "data_layer": "L1_SANITIZED",
                         "source": "user_sanitized_sample",
                     },

@@ -3,15 +3,15 @@ from __future__ import annotations
 import json
 import os
 
-from dv_entity_linking.catalog import CatalogRepository
-from dv_entity_linking.llm import MockLLMClient
-from dv_entity_linking.models import DataLayer
-from dv_entity_linking.models import EntityRecord
-from dv_entity_linking.models import EntityType
-from dv_entity_linking.models import ErrorCode
-from dv_entity_linking.models import RunMode
-from dv_entity_linking.service import EntityLinkingService
-from dv_entity_linking.web import create_app
+from dv_entity_linking.legacy.catalog import CatalogRepository
+from dv_entity_linking.legacy.llm import MockLLMClient
+from dv_entity_linking.legacy.models import DataLayer
+from dv_entity_linking.legacy.models import EntityRecord
+from dv_entity_linking.legacy.models import EntityType
+from dv_entity_linking.legacy.models import ErrorCode
+from dv_entity_linking.legacy.models import RunMode
+from dv_entity_linking.legacy.service import EntityLinkingService
+from dv_entity_linking.legacy.web import create_app
 
 
 def test_web_api_smoke(service):
@@ -131,8 +131,8 @@ def test_web_entity_detail_omits_forbidden_attributes_and_values(catalog):
     catalog._entities["UNSAFE-ATTRIBUTES"] = EntityRecord(
         entity_id="UNSAFE-ATTRIBUTES",
         entity_type=EntityType.KPI_TASK_NAME,
-        canonical_name="Unsafe Attributes Regression",
-        description="Regression record for fail-closed attribute projection.",
+        entity_name="Unsafe Attributes Regression",
+        desc="Regression record for fail-closed attribute projection.",
         attributes={
             "severity": "critical",
             "api_key": "sk-secret-leak",

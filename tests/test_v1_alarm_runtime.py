@@ -5,18 +5,18 @@ from pathlib import Path
 
 import pytest
 
-from dv_entity_linking.catalog import CatalogRepository
-from dv_entity_linking.datasets import (
+from dv_entity_linking.legacy.catalog import CatalogRepository
+from dv_entity_linking.legacy.datasets import (
     QueryDataset,
     QueryDatasetError,
     QueryDatasetLoader,
     QuerySample,
 )
-from dv_entity_linking.evaluation import evaluate_query_dataset
-from dv_entity_linking.llm import MockLLMClient
-from dv_entity_linking.models import DataLayer, ErrorCode, RunMode, Status
-from dv_entity_linking.service import EntityLinkingService
-from dv_entity_linking.web import create_app
+from dv_entity_linking.legacy.evaluation import evaluate_query_dataset
+from dv_entity_linking.legacy.llm import MockLLMClient
+from dv_entity_linking.legacy.models import DataLayer, ErrorCode, RunMode, Status
+from dv_entity_linking.legacy.service import EntityLinkingService
+from dv_entity_linking.legacy.web import create_app
 
 
 REAL_ENTITY_PATH = Path("samples/real/entity_examples.json")
@@ -182,9 +182,9 @@ def test_v1_l1_catalog_requires_v1_sanitized_metadata_confirmation(tmp_path):
                     {
                         "entity_id": "DV-ALM-X",
                         "entity_type": "alarm",
-                        "canonical_name": "ALM-123 Example",
-                        "aliases": ["123", "ALM-123"],
-                        "relations": [],
+                        "entity_name": "ALM-123 Example",
+                        "alias": ["123", "ALM-123"],
+                        "relationships": [],
                         "data_layer": "L1_SANITIZED",
                     }
                 ],

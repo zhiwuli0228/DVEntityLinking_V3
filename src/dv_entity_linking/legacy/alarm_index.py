@@ -62,7 +62,7 @@ class AlarmIndexBundle:
         for entity in self.catalog.entities:
             if entity.entity_type != EntityType.ALARM:
                 continue
-            names = [entity.canonical_name, *entity.aliases]
+            names = [entity.entity_name, *entity.alias]
             for index, name in enumerate(names):
                 key = normalize_text(name)
                 if not key:
@@ -119,7 +119,7 @@ class AlarmIndexBundle:
             candidates.append(
                 LinkCandidate(
                     entity_id=entity.entity_id,
-                    canonical_name=entity.canonical_name,
+                    entity_name=entity.entity_name,
                     entity_type=entity.entity_type,
                     confidence=clamp_score(entry.score),
                     match_reason=entry.reason,
@@ -138,7 +138,7 @@ class AlarmIndexBundle:
         return [
             LinkCandidate(
                 entity_id=item.entity_id,
-                canonical_name=item.canonical_name,
+                entity_name=item.entity_name,
                 entity_type=item.entity_type,
                 confidence=item.confidence,
                 match_reason=item.match_reason,

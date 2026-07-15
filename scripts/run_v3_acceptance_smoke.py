@@ -92,9 +92,9 @@ def main() -> int:
     args = parse_args()
     logger, log_file = setup_logging(args.log_dir, "v3-acceptance-smoke")
     ensure_src_path()
-    from dv_entity_linking.models import RunMode
-    from dv_entity_linking.service import EntityLinkingService
-    from dv_entity_linking.web import create_app
+    from dv_entity_linking.legacy.models import RunMode
+    from dv_entity_linking.legacy.service import EntityLinkingService
+    from dv_entity_linking.legacy.web import create_app
 
     run_mode = RunMode(args.mode)
     service = EntityLinkingService.from_v3_mock(

@@ -48,7 +48,7 @@ class EntityRetriever:
             items.append(
                 RetrievalItem(
                     entity_id=candidate.entity_id,
-                    canonical_name=candidate.canonical_name,
+                    entity_name=candidate.entity_name,
                     entity_type=candidate.entity_type,
                     score=clamp_score(score),
                     similarity_reason=", ".join(reasons),
@@ -77,10 +77,10 @@ class EntityRetriever:
         if name_score > 0.45:
             score += 0.30 * name_score
             reasons.append("name/alias similarity")
-        desc_score = self._token_overlap(source.description, candidate.description)
+        desc_score = self._token_overlap(source.desc, candidate.desc)
         if desc_score > 0:
             score += 0.20 * desc_score
-            reasons.append("description semantic overlap")
+            reasons.append("desc semantic overlap")
         if source.entity_type == candidate.entity_type:
             score += 0.15
             reasons.append("same entity type")
@@ -93,10 +93,10 @@ class EntityRetriever:
         ):
             linked = any(
                 relation.target_entity_id == candidate.entity_id
-                for relation in source.relations
+                for relation in source.relationships
             ) or any(
                 relation.target_entity_id == source.entity_id
-                for relation in candidate.relations
+                for relation in candidate.relationships
             )
             if linked:
                 score += 0.15
@@ -105,8 +105,8 @@ class EntityRetriever:
 
     @staticmethod
     def _name_score(source: EntityRecord, candidate: EntityRecord) -> float:
-        left_names = [source.canonical_name, *source.aliases]
-        right_names = [candidate.canonical_name, *candidate.aliases]
+        left_names = [source.entity_name, *source.alias]
+        right_names = [candidate.entity_name, *candidate.alias]
         return max(
             SequenceMatcher(None, normalize_text(left), normalize_text(right)).ratio()
             for left in left_names
