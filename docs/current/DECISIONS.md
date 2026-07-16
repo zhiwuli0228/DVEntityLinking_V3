@@ -34,7 +34,7 @@
 | D024 | 2026-06-01 | V2 前端采用方案 C：运维工作台式演示 + LLM 交互式高亮/解释；前端只服务项目演示，不做过度前端产品化。 |
 | D025 | 2026-06-01 | V2 KPI 类实体不再笼统使用 `kpi_metric`，需求层拆为 `kpi_task_name`、`kpi_meas_objects`、`kpi_meas_type_key`；`kpi_meas_objects` 往往是实例化实体，若暂时挖不出来可以先忽略。 |
 | D026 | 2026-06-01 | V2 网元相关实体拆为可预置的 `ne_type` 和运行时实例化的 `ne_name`；`ne_type` 可从 DVKnowledge 挖掘，`ne_name` 通过运行时接口 Mock 获取。 |
-| D027 | 2026-06-01 | V2 新增 KPI/网元类实体的 `aliases` 默认都为空；别名必须特殊标注并经确认，不得由预处理自动乱生成。 |
+| D027 | 2026-06-01 | V2 新增 KPI/网元类实体的 `alias` 默认都为空；别名必须特殊标注并经确认，不得由预处理自动乱生成。 |
 | D028 | 2026-06-01 | 用户确认 V2 启动样例：保留全部 `kpi_meas_type_key`、全部 `ne_type` 和全部 `ne_name`；`kpi_meas_objects` 本轮先忽略；`kpi_task_name` 在原候选基础上增加一个不同类型任务名；V2 必须支持多 mention Query，补充 Query 全部使用英文。 |
 | D029 | 2026-06-01 | V2 IR 独立评审、处置和 no-context/sealed 闭环验证已完成，结论为 closed with recorded residual risk；可进入 V2 功能设计，残余风险为跨类型歧义、LLM 降级、多 mention precision/recall 公式需在功能设计和测试设计中固化。 |
 | D030 | 2026-06-01 | V2 SR 功能设计初稿已形成；V2 代码实现需等待 SR 功能设计独立评审、处置和闭环完成。 |
@@ -84,7 +84,7 @@
 | D074 | 2026-06-24 | V3 Redis Mock 当前硬约束为 key 是实体词，value 是实体 ID。若出现同一实体词对应多个实体、别名扩展或自动生成实体词 key，必须在功能设计前确认策略，不得静默改变为多值结构或自动别名规则。 |
 | D075 | 2026-06-24 | V3 NER 部分需要详细设计，是本项目重中之重；必要时允许在需求和功能设计评审闭环后重构现有 NER、linker、catalog、service 和存储边界。 |
 | D076 | 2026-06-24 | V3 启动时只进入需求分析草稿阶段，主输出为 [IR.md](../baselines/v3/IR.md) 和 [IR-SR-DECOMPOSITION.md](../baselines/v3/IR-SR-DECOMPOSITION.md)。功能设计、代码实现、测试设计和验收候选均需等待 V3 IR 独立评审、处置和闭环验证。 |
-| D077 | 2026-06-24 | V3 GUI 决策确认已完成，原始记录为 [2026-06-24-dv-entity-linking-v3-decision-confirmation.json](../confirmations/2026-06-24-dv-entity-linking-v3-decision-confirmation.json)。确认结论：Redis value 保持单实体 ID，冲突数据加载 fail-closed 且不进入链接链路；Redis key 使用 `canonical_name` + 经确认 `aliases`，不自动生成别名；高斯结构化实体 V3 初始沿用最小字段 `entity_id`、`entity_type`、`canonical_name`、`aliases`、`description`，类型专属字段后续单独确认；NER 允许内部 schema 扩展但外部 API 和样例提交字段受控；默认离线 deterministic 可回归，LLM 仅作为可选分类、解释和 rerank 增强；样例策略复用 V1/V2，并新增 Redis/Gauss Mock artifacts 和 NER golden cases，新增样例必须脱敏并遵守 D003。 |
+| D077 | 2026-06-24 | V3 GUI 决策确认已完成，原始记录为 [2026-06-24-dv-entity-linking-v3-decision-confirmation.json](../confirmations/2026-06-24-dv-entity-linking-v3-decision-confirmation.json)。确认结论：Redis value 保持单实体 ID，冲突数据加载 fail-closed 且不进入链接链路；Redis key 使用 `entity_name` + 经确认 `alias`，不自动生成别名；高斯结构化实体 V3 初始沿用最小字段 `entity_id`、`entity_type`、`entity_name`、`alias`、`desc`，类型专属字段后续单独确认；NER 允许内部 schema 扩展但外部 API 和样例提交字段受控；默认离线 deterministic 可回归，LLM 仅作为可选分类、解释和 rerank 增强；样例策略复用 V1/V2，并新增 Redis/Gauss Mock artifacts 和 NER golden cases，新增样例必须脱敏并遵守 D003。 |
 | D078 | 2026-06-25 | V3 需求评审、评审处置和闭环验证已完成，记录见 [REQUIREMENT-REVIEW.md](../baselines/v3/REQUIREMENT-REVIEW.md)、[REQUIREMENT-REVIEW-DISPOSITION.md](../baselines/v3/REQUIREMENT-REVIEW-DISPOSITION.md) 和 [REQUIREMENT-CLOSURE-VERIFICATION.md](../baselines/v3/REQUIREMENT-CLOSURE-VERIFICATION.md)。评审无 P0/P1，P2/P3 均已关闭或以可接受残余风险关闭；V3 可进入功能设计阶段。代码实现仍需等待 V3 SR 功能设计评审、处置和闭环验证。 |
 | D079 | 2026-06-25 | V3 SR 功能设计草稿已形成，记录见 [SR.md](../baselines/v3/SR.md)。设计覆盖两层存储接口、Redis/Gauss Mock artifact、cross-layer validation、NER pipeline 阶段、内部 schema、状态/错误语义、LLM 可选增强、V1/V2 回归和 V3 设计级测试映射。V3 代码实现不得在 SR 功能设计独立评审、处置和闭环验证完成前启动。 |
 | D080 | 2026-06-25 | V3 SR 功能设计评审已完成，记录见 [FUNCTION-DESIGN-REVIEW.md](../baselines/v3/FUNCTION-DESIGN-REVIEW.md)。评审未发现 P0/P1/P2，仅发现 `TEST_ACCEPTANCE.md` V3 阶段口径滞后的 P3 文档同步项；该发现已接受并进入 [FUNCTION-DESIGN-REVIEW-DISPOSITION.md](../baselines/v3/FUNCTION-DESIGN-REVIEW-DISPOSITION.md) 处置。代码实现仍需等待功能设计评审闭环验证完成。 |

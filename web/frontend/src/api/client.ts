@@ -22,9 +22,10 @@ export interface ApiErrorItem {
 export interface SafeEntity {
   entity_id: string;
   entity_type: string;
-  canonical_name: string;
-  aliases: string[];
-  description: string;
+  entity_name: string;
+  alias: string[];
+  desc: string;
+  relationships: { relation_type: string; target_entity_id: string }[];
   source: string;
   data_layer: string;
   attributes_safe?: { key: string; value: unknown; source: string }[];
@@ -34,7 +35,7 @@ export interface SafeEntity {
 export interface SafeCandidate {
   entity_id: string;
   candidate_id: string;
-  canonical_name: string;
+  entity_name: string;
   entity_type: string;
   confidence: number;
   score: number;
@@ -158,7 +159,7 @@ export interface EntitiesResponse {
 
 export interface RetrievalItem {
   entity_id: string;
-  canonical_name: string;
+  entity_name: string;
   entity_type: string;
   score: number;
   similarity_reason: string;

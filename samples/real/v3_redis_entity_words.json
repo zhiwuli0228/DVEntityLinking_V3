@@ -3,10 +3,10 @@
     "schema_version": "v3.redis_entity_words.1",
     "normalization_version": "v3.entity_word_norm.1",
     "key_scope": [
-      "canonical_name",
-      "confirmed_aliases"
+      "entity_name",
+      "confirmed_alias"
     ],
-    "aliases_auto_generated": false,
+    "alias_auto_generated": false,
     "word_count": 11
   },
   "entity_words": [
@@ -14,7 +14,7 @@
       "entity_word": "ALM-51020 The certificate is about to expire",
       "normalized_key": "alm-51020thecertificateisabouttoexpire",
       "entity_id": "DV-ALM-002",
-      "source": "canonical_name",
+      "source": "entity_name",
       "normalization_version": "v3.entity_word_norm.1"
     },
     {
@@ -49,42 +49,42 @@
       "entity_word": "CPU Usage",
       "normalized_key": "cpuusage",
       "entity_id": "DV-KPI-MTK-001",
-      "source": "canonical_name",
+      "source": "entity_name",
       "normalization_version": "v3.entity_word_norm.1"
     },
     {
       "entity_word": "Kafka Monitor",
       "normalized_key": "kafkamonitor",
       "entity_id": "DV-KPI-TASK-002",
-      "source": "canonical_name",
+      "source": "entity_name",
       "normalization_version": "v3.entity_word_norm.1"
     },
     {
       "entity_word": "Network quality monitoring",
       "normalized_key": "networkqualitymonitoring",
       "entity_id": "DV-KPI-TASK-005",
-      "source": "canonical_name",
+      "source": "entity_name",
       "normalization_version": "v3.entity_word_norm.1"
     },
     {
       "entity_word": "onlinecharging_docker",
       "normalized_key": "onlinecharging_docker",
       "entity_id": "DV-NE-TYPE-002",
-      "source": "canonical_name",
+      "source": "entity_name",
       "normalization_version": "v3.entity_word_norm.1"
     },
     {
       "entity_word": "CBS_1_cbpmdb_b2fc41cbb389(FI01)",
       "normalized_key": "cbs_1_cbpmdb_b2fc41cbb389(fi01)",
       "entity_id": "DV-NE-NAME-001",
-      "source": "canonical_name",
+      "source": "entity_name",
       "normalization_version": "v3.entity_word_norm.1"
     },
     {
       "entity_word": "CloudHost-VM-1-1-927344",
       "normalized_key": "cloudhost-vm-1-1-927344",
       "entity_id": "DV-NE-NAME-003",
-      "source": "canonical_name",
+      "source": "entity_name",
       "normalization_version": "v3.entity_word_norm.1"
     }
   ]

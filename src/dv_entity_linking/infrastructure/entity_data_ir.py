@@ -9,10 +9,10 @@ from ..domain.ports import (
     EntityDataOperation,
     InternalRouteClient,
 )
-from .entity_data_rest import RestEntityDataClient
+from .entity_data_base import EntityDataClientBase
 
 
-class IrEntityDataClient(RestEntityDataClient):
+class IrEntityDataClient(EntityDataClientBase):
     """Primary production adapter: invoke an IR URL through a platform-owned client."""
 
     def __init__(

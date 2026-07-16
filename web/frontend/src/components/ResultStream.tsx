@@ -115,7 +115,7 @@ export function ResultStream({
                   aria-pressed={activeCandidateId === c.entity_id}
                 >
                   <div className="text-sm font-semibold text-shell-ink">{c.entity_id}</div>
-                  <div className="text-xs text-shell-ink break-words">{c.canonical_name}</div>
+                  <div className="text-xs text-shell-ink break-words">{c.entity_name}</div>
                   <div className="text-[11px] text-shell-muted mt-0.5 break-words">
                     {c.entity_type} · score {c.confidence ?? c.score ?? "-"} · {c.match_reason}
                   </div>

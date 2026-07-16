@@ -1,4 +1,4 @@
-"""V3 JSON storage adapter implementing the V4 entity-data port for acceptance."""
+"""Test-only V3 JSON storage adapter retained for migration comparisons."""
 
 from __future__ import annotations
 
@@ -11,11 +11,11 @@ from ..domain.ports import (
     EntityWordMatch,
     EntityWordMatchResponse,
 )
-from ..legacy.storage import EntityStorageRepository
+from .storage import EntityStorageRepository
 
 
 class V3MockEntityDataClient:
-    """Offline adapter that models V4 database word matching with V3 artifacts."""
+    """Explicit test double; never assembled by the V4 production factory."""
 
     def __init__(self, repository: EntityStorageRepository) -> None:
         self._repository = repository

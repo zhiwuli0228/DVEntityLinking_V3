@@ -8,7 +8,7 @@
       "kpi_meas_type_key"
     ],
     "entity_count": 16,
-    "aliases_default_empty": true,
+    "alias_default_empty": true,
     "kpi_meas_objects_included": false,
     "base_entity_files": [
       "samples/real/entity_examples.json"
@@ -18,114 +18,146 @@
     {
       "entity_id": "DV-KPI-TASK-001",
       "entity_type": "kpi_task_name",
-      "canonical_name": "DCC error code num V6",
-      "aliases": [],
-      "description": "KPI measurement task name confirmed from the user example."
+      "entity_name": "DCC error code num V6",
+      "alias": [],
+      "desc": "KPI measurement task name confirmed from the user example.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-TASK-002",
       "entity_type": "kpi_task_name",
-      "canonical_name": "Kafka Monitor",
-      "aliases": [],
-      "description": "KPI measurement task name confirmed from the user example."
+      "entity_name": "Kafka Monitor",
+      "alias": [],
+      "desc": "KPI measurement task name confirmed from the user example.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-TASK-003",
       "entity_type": "kpi_task_name",
-      "canonical_name": "Indicator Anomaly Detection",
-      "aliases": [],
-      "description": "AIOps indicator task name from DVKnowledge indicator analysis context."
+      "entity_name": "Indicator Anomaly Detection",
+      "alias": [],
+      "desc": "AIOps indicator task name from DVKnowledge indicator analysis context.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-TASK-004",
       "entity_type": "kpi_task_name",
-      "canonical_name": "Indicator Trend Prediction",
-      "aliases": [],
-      "description": "AIOps indicator task name from DVKnowledge indicator analysis context."
+      "entity_name": "Indicator Trend Prediction",
+      "alias": [],
+      "desc": "AIOps indicator task name from DVKnowledge indicator analysis context.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-TASK-005",
       "entity_type": "kpi_task_name",
-      "canonical_name": "Network quality monitoring",
-      "aliases": [],
-      "description": "Performance monitoring task name from DVKnowledge network quality monitoring context."
+      "entity_name": "Network quality monitoring",
+      "alias": [],
+      "desc": "Performance monitoring task name from DVKnowledge network quality monitoring context.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-MTK-001",
       "entity_type": "kpi_meas_type_key",
-      "canonical_name": "CPU Usage",
-      "aliases": [],
-      "description": "KPI measurement type key for CPU usage."
+      "entity_name": "CPU Usage",
+      "alias": [],
+      "desc": "KPI measurement type key for CPU usage.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-MTK-002",
       "entity_type": "kpi_meas_type_key",
-      "canonical_name": "Average memory usage per time interval",
-      "aliases": [],
-      "description": "KPI measurement type key for average memory usage per time interval."
+      "entity_name": "Average memory usage per time interval",
+      "alias": [],
+      "desc": "KPI measurement type key for average memory usage per time interval.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-MTK-003",
       "entity_type": "kpi_meas_type_key",
-      "canonical_name": "File System Usage",
-      "aliases": [],
-      "description": "KPI measurement type key for file system or storage usage."
+      "entity_name": "File System Usage",
+      "alias": [],
+      "desc": "KPI measurement type key for file system or storage usage.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-MTK-004",
       "entity_type": "kpi_meas_type_key",
-      "canonical_name": "Average Receive Speed per time interval",
-      "aliases": [],
-      "description": "KPI measurement type key for average receive speed per time interval."
+      "entity_name": "Average Receive Speed per time interval",
+      "alias": [],
+      "desc": "KPI measurement type key for average receive speed per time interval.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-MTK-005",
       "entity_type": "kpi_meas_type_key",
-      "canonical_name": "Average Send Speed per time interval",
-      "aliases": [],
-      "description": "KPI measurement type key for average send speed per time interval."
+      "entity_name": "Average Send Speed per time interval",
+      "alias": [],
+      "desc": "KPI measurement type key for average send speed per time interval.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-KPI-MTK-006",
       "entity_type": "kpi_meas_type_key",
-      "canonical_name": "IOPS Read",
-      "aliases": [],
-      "description": "KPI measurement type key for read IOPS."
+      "entity_name": "IOPS Read",
+      "alias": [],
+      "desc": "KPI measurement type key for read IOPS.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-NE-TYPE-001",
       "entity_type": "ne_type",
-      "canonical_name": "cbs.billing.adapterapp",
-      "aliases": [],
-      "description": "Preconfigured NE type confirmed from the user example."
+      "entity_name": "cbs.billing.adapterapp",
+      "alias": [],
+      "desc": "Preconfigured NE type confirmed from the user example.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-NE-TYPE-002",
       "entity_type": "ne_type",
-      "canonical_name": "onlinecharging_docker",
-      "aliases": [],
-      "description": "Preconfigured NE type confirmed from the user example."
+      "entity_name": "onlinecharging_docker",
+      "alias": [],
+      "desc": "Preconfigured NE type confirmed from the user example.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-NE-NAME-001",
       "entity_type": "ne_name",
-      "canonical_name": "CBS_1_cbpmdb_b2fc41cbb389(FI01)",
-      "aliases": [],
-      "description": "Runtime NE name instance confirmed from the user example."
+      "entity_name": "CBS_1_cbpmdb_b2fc41cbb389(FI01)",
+      "alias": [],
+      "desc": "Runtime NE name instance confirmed from the user example.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-NE-NAME-002",
       "entity_type": "ne_name",
-      "canonical_name": "container(access-12345)",
-      "aliases": [],
-      "description": "Runtime NE name instance confirmed from the user example."
+      "entity_name": "container(access-12345)",
+      "alias": [],
+      "desc": "Runtime NE name instance confirmed from the user example.",
+      "attributes": {},
+      "relationships": []
     },
     {
       "entity_id": "DV-NE-NAME-003",
       "entity_type": "ne_name",
-      "canonical_name": "CloudHost-VM-1-1-927344",
-      "aliases": [],
-      "description": "Runtime NE name instance confirmed from the user example."
+      "entity_name": "CloudHost-VM-1-1-927344",
+      "alias": [],
+      "desc": "Runtime NE name instance confirmed from the user example.",
+      "attributes": {},
+      "relationships": []
     }
   ]
 }

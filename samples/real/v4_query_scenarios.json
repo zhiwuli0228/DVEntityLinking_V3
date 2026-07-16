@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "schema_version": "v4.query_scenarios.1",
+    "name": "V4 entity-linking query scenario suite",
+    "purpose": "Reusable queries for IR, deterministic, LLM-fallback, lifecycle, and async acceptance coverage.",
+    "query_count": 32,
+    "notes": "fixture selects the required Entity Data / enhancer / reranker double; no local or V3 data source is implied."
+  },
+  "scenarios": [
+    {"id": "V4-Q-001", "category": "known_exact", "query": "Check CPU Usage.", "fixture": "healthy_default", "expected_status": "linked", "expected_entity_ids": ["DV-KPI-MTK-001"]},
+    {"id": "V4-Q-002", "category": "known_exact", "query": "Please investigate ALM-51020.", "fixture": "healthy_default", "expected_status": "linked", "expected_entity_ids": ["DV-ALM-002"]},
+    {"id": "V4-Q-003", "category": "multiple_known", "query": "Check ALM-51020 and CPU Usage.", "fixture": "healthy_default", "expected_status": "linked", "expected_entity_ids": ["DV-ALM-002", "DV-KPI-MTK-001"]},
+    {"id": "V4-Q-004", "category": "normalization", "query": "Check CPU   Usage now.", "fixture": "healthy_default", "expected_status": "linked", "expected_entity_ids": ["DV-KPI-MTK-001"]},
+    {"id": "V4-Q-005", "category": "repeated_mention", "query": "Compare CPU Usage with CPU Usage from the previous interval.", "fixture": "healthy_default", "expected_status": "linked", "expected_entity_ids": ["DV-KPI-MTK-001"]},
+    {"id": "V4-Q-006", "category": "boundary_protection", "query": "Check ALM-5102 impact.", "fixture": "healthy_default", "expected_status": "no_match", "expected_entity_ids": []},
+    {"id": "V4-Q-007", "category": "unknown_shape", "query": "Investigate UnknownApp-999.", "fixture": "healthy_default", "expected_status": "no_match", "expected_entity_ids": []},
+    {"id": "V4-Q-008", "category": "partial", "query": "Show CPU Usage for UnknownApp-999.", "fixture": "healthy_default", "expected_status": "partial", "expected_entity_ids": ["DV-KPI-MTK-001"]},
+    {"id": "V4-Q-009", "category": "not_required", "query": "Open the operations dashboard.", "fixture": "healthy_default", "expected_status": "not_required", "expected_remote_calls": 0},
+    {"id": "V4-Q-010", "category": "not_required", "query": "Show the dashboard summary.", "fixture": "healthy_default", "expected_status": "not_required", "expected_remote_calls": 0},
+    {"id": "V4-Q-011", "category": "context_required_negative", "query": "Show system health.", "fixture": "context_required_system", "expected_status": "no_match", "expected_entity_ids": []},
+    {"id": "V4-Q-012", "category": "context_required_positive", "query": "Show SYSTEM tablespace usage.", "fixture": "context_required_system", "expected_status": "linked", "expected_entity_ids": ["DB-1"]},
+    {"id": "V4-Q-013", "category": "type_filter", "query": "Check CPU Usage.", "entity_types": ["metric"], "fixture": "cross_type_cpu", "expected_status": "linked", "expected_entity_ids": ["metric-1"]},
+    {"id": "V4-Q-014", "category": "cross_type_ambiguous", "query": "Check CPU Usage.", "fixture": "cross_type_cpu", "expected_status": "ambiguous", "expected_entity_ids": ["alarm-1", "metric-1"]},
+    {"id": "V4-Q-015", "category": "dependency_timeout", "query": "Check CPU Usage.", "fixture": "match_timeout", "expected_status": "dependency_failed", "expected_error_code": "timeout"},
+    {"id": "V4-Q-016", "category": "dependency_schema", "query": "Check CPU Usage.", "fixture": "invalid_match_schema", "expected_status": "dependency_failed", "expected_error_code": "schema_error"},
+    {"id": "V4-Q-017", "category": "version_pinning", "query": "Check CPU Usage.", "fixture": "batch_version_mismatch", "expected_status": "dependency_failed", "expected_error_code": "entity_miss"},
+    {"id": "V4-Q-018", "category": "entity_miss", "query": "Check CPU Usage.", "fixture": "missing_detail", "expected_status": "dependency_failed", "expected_error_code": "entity_miss"},
+    {"id": "V4-Q-019", "category": "s3_disabled", "query": "Check CPU Usage.", "extraction_mode": "disabled", "fixture": "healthy_default", "expected_status": "linked"},
+    {"id": "V4-Q-020", "category": "s3_valid", "query": "Check CPU Usage.", "extraction_mode": "llm", "fixture": "valid_metric_enhancer", "expected_status": "linked", "expected_entity_ids": ["metric-1"]},
+    {"id": "V4-Q-021", "category": "s3_invalid_span_fallback", "query": "Check CPU Usage.", "extraction_mode": "llm", "allow_fallback": true, "fixture": "invalid_span_enhancer", "expected_status": "linked", "expected_degraded": true},
+    {"id": "V4-Q-022", "category": "s3_strict_failure", "query": "Check CPU Usage.", "extraction_mode": "llm", "allow_fallback": false, "fixture": "invalid_span_enhancer", "expected_status": "dependency_failed", "expected_error_code": "extractor_failed"},
+    {"id": "V4-Q-023", "category": "s3_low_confidence_fallback", "query": "Check CPU Usage.", "extraction_mode": "llm", "allow_fallback": true, "fixture": "low_confidence_enhancer", "expected_status": "ambiguous", "expected_degraded": true},
+    {"id": "V4-Q-024", "category": "s5_select_existing", "query": "Check CPU Usage.", "extraction_mode": "llm", "fixture": "cross_type_cpu_valid_reranker", "expected_status": "linked", "expected_entity_ids": ["metric-1"]},
+    {"id": "V4-Q-025", "category": "s5_invalid_id_strict", "query": "Check CPU Usage.", "extraction_mode": "llm", "allow_fallback": false, "fixture": "cross_type_cpu_invalid_id_reranker", "expected_status": "ambiguous", "expected_degraded": true},
+    {"id": "V4-Q-026", "category": "s5_timeout_strict", "query": "Check CPU Usage.", "extraction_mode": "llm", "allow_fallback": false, "fixture": "cross_type_cpu_timeout_reranker", "expected_status": "ambiguous", "expected_degraded": true},
+    {"id": "V4-Q-027", "category": "s5_schema_strict", "query": "Check CPU Usage.", "extraction_mode": "llm", "allow_fallback": false, "fixture": "cross_type_cpu_invalid_schema_reranker", "expected_status": "ambiguous", "expected_degraded": true},
+    {"id": "V4-Q-028", "category": "s5_low_confidence_strict", "query": "Check CPU Usage.", "extraction_mode": "llm", "allow_fallback": false, "fixture": "cross_type_cpu_low_confidence_reranker", "expected_status": "ambiguous", "expected_degraded": true},
+    {"id": "V4-Q-029", "category": "async_equivalence", "query": "Check ALM-51020 and CPU Usage.", "entrypoint": "link_async", "fixture": "healthy_default", "expected_status": "linked", "expected_entity_ids": ["DV-ALM-002", "DV-KPI-MTK-001"]},
+    {"id": "V4-Q-030", "category": "async_non_blocking", "query": "Check CPU Usage.", "entrypoint": "link_async", "fixture": "blocking_match_client", "expected_status": "no_match", "expected_event_loop_progress": true},
+    {"id": "V4-Q-031", "category": "startup_fail_fast", "query": "Check CPU Usage.", "startup_failure_policy": "FAIL_FAST", "fixture": "unhealthy_ir", "expected_factory_error": "startup_health_failed"},
+    {"id": "V4-Q-032", "category": "startup_degraded", "query": "Check CPU Usage.", "startup_failure_policy": "DEGRADED", "fixture": "unhealthy_ir", "expected_status": "dependency_failed", "expected_error_code": "startup_health_failed"}
+  ]
+}

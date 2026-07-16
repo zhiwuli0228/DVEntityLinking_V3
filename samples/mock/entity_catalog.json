@@ -8,15 +8,42 @@
     {
       "entity_id": "NE-DV-RAN-001",
       "entity_type": "network_resource",
-      "canonical_name": "DV RAN Site Alpha",
-      "aliases": ["Alpha站点", "RAN-A1", "站点A"],
-      "description": "Synthetic access site used for RAN alarm and KPI demo.",
-      "attributes": {"region": "east", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "ALM-LINK-DOWN", "relation_type": "raises", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "KPI-ACCESS-SUCCESS", "relation_type": "measured_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "TOPO-ALPHA-BETA", "relation_type": "participates_in", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "KB-LINK-DOWN-RUNBOOK", "relation_type": "handled_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "DV RAN Site Alpha",
+      "alias": [
+        "Alpha站点",
+        "RAN-A1",
+        "站点A"
+      ],
+      "desc": "Synthetic access site used for RAN alarm and KPI demo.",
+      "attributes": {
+        "region": "east",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "ALM-LINK-DOWN",
+          "relation_type": "raises",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "KPI-ACCESS-SUCCESS",
+          "relation_type": "measured_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "TOPO-ALPHA-BETA",
+          "relation_type": "participates_in",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "KB-LINK-DOWN-RUNBOOK",
+          "relation_type": "handled_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -24,14 +51,36 @@
     {
       "entity_id": "NE-DV-RAN-002",
       "entity_type": "network_resource",
-      "canonical_name": "DV RAN Site Beta",
-      "aliases": ["Beta站点", "RAN-B2", "站点B"],
-      "description": "Synthetic access site paired with Alpha for topology demo.",
-      "attributes": {"region": "east", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "ALM-HIGH-LATENCY", "relation_type": "raises", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "KPI-LATENCY-P95", "relation_type": "measured_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "TOPO-ALPHA-BETA", "relation_type": "participates_in", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "DV RAN Site Beta",
+      "alias": [
+        "Beta站点",
+        "RAN-B2",
+        "站点B"
+      ],
+      "desc": "Synthetic access site paired with Alpha for topology demo.",
+      "attributes": {
+        "region": "east",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "ALM-HIGH-LATENCY",
+          "relation_type": "raises",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "KPI-LATENCY-P95",
+          "relation_type": "measured_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "TOPO-ALPHA-BETA",
+          "relation_type": "participates_in",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -39,13 +88,30 @@
     {
       "entity_id": "NE-DV-CORE-001",
       "entity_type": "network_resource",
-      "canonical_name": "DV Core Gateway East",
-      "aliases": ["GW-E", "核心网关东", "东区核心"],
-      "description": "Synthetic core gateway for access and packet loss scenarios.",
-      "attributes": {"region": "east", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "KPI-PACKET-LOSS", "relation_type": "measured_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "TOPO-CORE-ACCESS", "relation_type": "participates_in", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "DV Core Gateway East",
+      "alias": [
+        "GW-E",
+        "核心网关东",
+        "东区核心"
+      ],
+      "desc": "Synthetic core gateway for access and packet loss scenarios.",
+      "attributes": {
+        "region": "east",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "KPI-PACKET-LOSS",
+          "relation_type": "measured_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "TOPO-CORE-ACCESS",
+          "relation_type": "participates_in",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -53,13 +119,30 @@
     {
       "entity_id": "NE-DV-CORE-002",
       "entity_type": "network_resource",
-      "canonical_name": "DV Core Gateway West",
-      "aliases": ["GW-W", "核心网关西", "西区核心"],
-      "description": "Synthetic standby core gateway for comparison retrieval.",
-      "attributes": {"region": "west", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "KPI-CPU-LOAD", "relation_type": "measured_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "TOPO-BETA-CORE", "relation_type": "participates_in", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "DV Core Gateway West",
+      "alias": [
+        "GW-W",
+        "核心网关西",
+        "西区核心"
+      ],
+      "desc": "Synthetic standby core gateway for comparison retrieval.",
+      "attributes": {
+        "region": "west",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "KPI-CPU-LOAD",
+          "relation_type": "measured_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "TOPO-BETA-CORE",
+          "relation_type": "participates_in",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -67,12 +150,24 @@
     {
       "entity_id": "ALM-LINK-DOWN",
       "entity_type": "alarm_event",
-      "canonical_name": "Link Down Alarm",
-      "aliases": ["链路断告警", "LINK_DOWN", "链路中断"],
-      "description": "Synthetic alarm for access link interruption.",
-      "attributes": {"severity": "major", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "KB-LINK-DOWN-RUNBOOK", "relation_type": "handled_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "Link Down Alarm",
+      "alias": [
+        "链路断告警",
+        "LINK_DOWN",
+        "链路中断"
+      ],
+      "desc": "Synthetic alarm for access link interruption.",
+      "attributes": {
+        "severity": "major",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "KB-LINK-DOWN-RUNBOOK",
+          "relation_type": "handled_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -80,12 +175,24 @@
     {
       "entity_id": "ALM-HIGH-LATENCY",
       "entity_type": "alarm_event",
-      "canonical_name": "High Latency Alarm",
-      "aliases": ["高时延告警", "LATENCY_HIGH", "时延异常"],
-      "description": "Synthetic alarm for high latency and poor experience.",
-      "attributes": {"severity": "minor", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "KB-LATENCY-CASE", "relation_type": "handled_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "High Latency Alarm",
+      "alias": [
+        "高时延告警",
+        "LATENCY_HIGH",
+        "时延异常"
+      ],
+      "desc": "Synthetic alarm for high latency and poor experience.",
+      "attributes": {
+        "severity": "minor",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "KB-LATENCY-CASE",
+          "relation_type": "handled_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -93,12 +200,24 @@
     {
       "entity_id": "ALM-CP01-CONTROL",
       "entity_type": "alarm_event",
-      "canonical_name": "CP01 Control Plane Alarm",
-      "aliases": ["CP01", "控制面CP01", "控制面异常"],
-      "description": "Synthetic ambiguous CP01 alarm for control plane symptoms.",
-      "attributes": {"severity": "major", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "KB-CP01-DISAMBIGUATION", "relation_type": "handled_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "CP01 Control Plane Alarm",
+      "alias": [
+        "CP01",
+        "控制面CP01",
+        "控制面异常"
+      ],
+      "desc": "Synthetic ambiguous CP01 alarm for control plane symptoms.",
+      "attributes": {
+        "severity": "major",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "KB-CP01-DISAMBIGUATION",
+          "relation_type": "handled_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -106,12 +225,24 @@
     {
       "entity_id": "ALM-CP01-POWER",
       "entity_type": "alarm_event",
-      "canonical_name": "CP01 Power Alarm",
-      "aliases": ["CP01", "电源CP01", "电源异常"],
-      "description": "Synthetic ambiguous CP01 alarm for power symptoms.",
-      "attributes": {"severity": "major", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "KB-CP01-DISAMBIGUATION", "relation_type": "handled_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "CP01 Power Alarm",
+      "alias": [
+        "CP01",
+        "电源CP01",
+        "电源异常"
+      ],
+      "desc": "Synthetic ambiguous CP01 alarm for power symptoms.",
+      "attributes": {
+        "severity": "major",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "KB-CP01-DISAMBIGUATION",
+          "relation_type": "handled_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -119,45 +250,78 @@
     {
       "entity_id": "KPI-ACCESS-SUCCESS",
       "entity_type": "kpi_metric",
-      "canonical_name": "Access Success Rate",
-      "aliases": ["接入成功率", "ASR", "ACCESS_SR"],
-      "description": "Synthetic KPI for access success rate.",
-      "attributes": {"unit": "percent", "mock_field": "TBD"},
-      "relations": [],
+      "entity_name": "Access Success Rate",
+      "alias": [
+        "接入成功率",
+        "ASR",
+        "ACCESS_SR"
+      ],
+      "desc": "Synthetic KPI for access success rate.",
+      "attributes": {
+        "unit": "percent",
+        "mock_field": "TBD"
+      },
+      "relationships": [],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
     },
     {
       "entity_id": "KPI-LATENCY-P95",
       "entity_type": "kpi_metric",
-      "canonical_name": "Latency P95",
-      "aliases": ["P95时延", "LAT_P95", "时延95分位"],
-      "description": "Synthetic KPI for p95 latency.",
-      "attributes": {"unit": "ms", "mock_field": "TBD"},
-      "relations": [],
+      "entity_name": "Latency P95",
+      "alias": [
+        "P95时延",
+        "LAT_P95",
+        "时延95分位"
+      ],
+      "desc": "Synthetic KPI for p95 latency.",
+      "attributes": {
+        "unit": "ms",
+        "mock_field": "TBD"
+      },
+      "relationships": [],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
     },
     {
       "entity_id": "KPI-CPU-LOAD",
       "entity_type": "kpi_metric",
-      "canonical_name": "CPU Load",
-      "aliases": ["CPU负载", "CPU_LOAD", "处理器负载"],
-      "description": "Synthetic KPI for compute load.",
-      "attributes": {"unit": "percent", "mock_field": "TBD"},
-      "relations": [],
+      "entity_name": "CPU Load",
+      "alias": [
+        "CPU负载",
+        "CPU_LOAD",
+        "处理器负载"
+      ],
+      "desc": "Synthetic KPI for compute load.",
+      "attributes": {
+        "unit": "percent",
+        "mock_field": "TBD"
+      },
+      "relationships": [],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
     },
     {
       "entity_id": "KPI-PACKET-LOSS",
       "entity_type": "kpi_metric",
-      "canonical_name": "Packet Loss Rate",
-      "aliases": ["丢包率", "PKT_LOSS", "掉包率"],
-      "description": "Synthetic KPI for packet loss.",
-      "attributes": {"unit": "percent", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "KB-PACKET-LOSS-CASE", "relation_type": "explained_by", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "Packet Loss Rate",
+      "alias": [
+        "丢包率",
+        "PKT_LOSS",
+        "掉包率"
+      ],
+      "desc": "Synthetic KPI for packet loss.",
+      "attributes": {
+        "unit": "percent",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "KB-PACKET-LOSS-CASE",
+          "relation_type": "explained_by",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -165,13 +329,29 @@
     {
       "entity_id": "TOPO-ALPHA-BETA",
       "entity_type": "topology_relation",
-      "canonical_name": "Alpha Beta Access Link",
-      "aliases": ["Alpha-Beta链路", "A-B接入链路"],
-      "description": "Synthetic topology relation between Alpha and Beta sites.",
-      "attributes": {"relation": "access_link", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "NE-DV-RAN-001", "relation_type": "connects", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "NE-DV-RAN-002", "relation_type": "connects", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "Alpha Beta Access Link",
+      "alias": [
+        "Alpha-Beta链路",
+        "A-B接入链路"
+      ],
+      "desc": "Synthetic topology relation between Alpha and Beta sites.",
+      "attributes": {
+        "relation": "access_link",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "NE-DV-RAN-001",
+          "relation_type": "connects",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "NE-DV-RAN-002",
+          "relation_type": "connects",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -179,13 +359,29 @@
     {
       "entity_id": "TOPO-CORE-ACCESS",
       "entity_type": "topology_relation",
-      "canonical_name": "Core Access East Path",
-      "aliases": ["东区核心接入路径", "CORE_ACCESS_E"],
-      "description": "Synthetic topology relation from east core to access network.",
-      "attributes": {"relation": "path", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "NE-DV-CORE-001", "relation_type": "connects", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "NE-DV-RAN-001", "relation_type": "connects", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "Core Access East Path",
+      "alias": [
+        "东区核心接入路径",
+        "CORE_ACCESS_E"
+      ],
+      "desc": "Synthetic topology relation from east core to access network.",
+      "attributes": {
+        "relation": "path",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "NE-DV-CORE-001",
+          "relation_type": "connects",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "NE-DV-RAN-001",
+          "relation_type": "connects",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -193,13 +389,29 @@
     {
       "entity_id": "TOPO-BETA-CORE",
       "entity_type": "topology_relation",
-      "canonical_name": "Beta Core West Path",
-      "aliases": ["Beta到西核心路径", "BETA_CORE_W"],
-      "description": "Synthetic topology relation from Beta site to west core.",
-      "attributes": {"relation": "path", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "NE-DV-RAN-002", "relation_type": "connects", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "NE-DV-CORE-002", "relation_type": "connects", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "Beta Core West Path",
+      "alias": [
+        "Beta到西核心路径",
+        "BETA_CORE_W"
+      ],
+      "desc": "Synthetic topology relation from Beta site to west core.",
+      "attributes": {
+        "relation": "path",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "NE-DV-RAN-002",
+          "relation_type": "connects",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "NE-DV-CORE-002",
+          "relation_type": "connects",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -207,13 +419,29 @@
     {
       "entity_id": "TOPO-ALPHA-GW",
       "entity_type": "topology_relation",
-      "canonical_name": "Alpha Gateway Uplink",
-      "aliases": ["Alpha上联网关", "ALPHA_UPLINK"],
-      "description": "Synthetic topology relation for Alpha uplink gateway.",
-      "attributes": {"relation": "uplink", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "NE-DV-RAN-001", "relation_type": "connects", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "NE-DV-CORE-001", "relation_type": "connects", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "Alpha Gateway Uplink",
+      "alias": [
+        "Alpha上联网关",
+        "ALPHA_UPLINK"
+      ],
+      "desc": "Synthetic topology relation for Alpha uplink gateway.",
+      "attributes": {
+        "relation": "uplink",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "NE-DV-RAN-001",
+          "relation_type": "connects",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "NE-DV-CORE-001",
+          "relation_type": "connects",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -221,12 +449,24 @@
     {
       "entity_id": "KB-LINK-DOWN-RUNBOOK",
       "entity_type": "knowledge_case",
-      "canonical_name": "Link Down Recovery Runbook",
-      "aliases": ["链路断处理手册", "LINK_DOWN_RUNBOOK", "断链处理"],
-      "description": "Synthetic runbook for link down troubleshooting.",
-      "attributes": {"document_type": "runbook", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "ALM-LINK-DOWN", "relation_type": "handles", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "Link Down Recovery Runbook",
+      "alias": [
+        "链路断处理手册",
+        "LINK_DOWN_RUNBOOK",
+        "断链处理"
+      ],
+      "desc": "Synthetic runbook for link down troubleshooting.",
+      "attributes": {
+        "document_type": "runbook",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "ALM-LINK-DOWN",
+          "relation_type": "handles",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -234,13 +474,30 @@
     {
       "entity_id": "KB-LATENCY-CASE",
       "entity_type": "knowledge_case",
-      "canonical_name": "Latency Troubleshooting Case",
-      "aliases": ["高时延案例", "LATENCY_CASE", "时延排障"],
-      "description": "Synthetic case for high latency diagnosis.",
-      "attributes": {"document_type": "case", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "ALM-HIGH-LATENCY", "relation_type": "handles", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "KPI-LATENCY-P95", "relation_type": "uses", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "Latency Troubleshooting Case",
+      "alias": [
+        "高时延案例",
+        "LATENCY_CASE",
+        "时延排障"
+      ],
+      "desc": "Synthetic case for high latency diagnosis.",
+      "attributes": {
+        "document_type": "case",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "ALM-HIGH-LATENCY",
+          "relation_type": "handles",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "KPI-LATENCY-P95",
+          "relation_type": "uses",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -248,13 +505,30 @@
     {
       "entity_id": "KB-CP01-DISAMBIGUATION",
       "entity_type": "knowledge_case",
-      "canonical_name": "CP01 Alarm Disambiguation Guide",
-      "aliases": ["CP01消歧指南", "CP01_GUIDE", "CP01处理"],
-      "description": "Synthetic guide for distinguishing CP01 alarm meanings.",
-      "attributes": {"document_type": "guide", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "ALM-CP01-CONTROL", "relation_type": "explains", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "ALM-CP01-POWER", "relation_type": "explains", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "CP01 Alarm Disambiguation Guide",
+      "alias": [
+        "CP01消歧指南",
+        "CP01_GUIDE",
+        "CP01处理"
+      ],
+      "desc": "Synthetic guide for distinguishing CP01 alarm meanings.",
+      "attributes": {
+        "document_type": "guide",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "ALM-CP01-CONTROL",
+          "relation_type": "explains",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "ALM-CP01-POWER",
+          "relation_type": "explains",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"
@@ -262,13 +536,30 @@
     {
       "entity_id": "KB-PACKET-LOSS-CASE",
       "entity_type": "knowledge_case",
-      "canonical_name": "Packet Loss Diagnosis Case",
-      "aliases": ["丢包诊断案例", "PKT_LOSS_CASE", "丢包排障"],
-      "description": "Synthetic case for packet loss and core gateway symptoms.",
-      "attributes": {"document_type": "case", "mock_field": "TBD"},
-      "relations": [
-        {"target_entity_id": "KPI-PACKET-LOSS", "relation_type": "uses", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"},
-        {"target_entity_id": "NE-DV-CORE-001", "relation_type": "mentions", "source": "mock_catalog", "data_layer": "L0_SYNTHETIC"}
+      "entity_name": "Packet Loss Diagnosis Case",
+      "alias": [
+        "丢包诊断案例",
+        "PKT_LOSS_CASE",
+        "丢包排障"
+      ],
+      "desc": "Synthetic case for packet loss and core gateway symptoms.",
+      "attributes": {
+        "document_type": "case",
+        "mock_field": "TBD"
+      },
+      "relationships": [
+        {
+          "target_entity_id": "KPI-PACKET-LOSS",
+          "relation_type": "uses",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        },
+        {
+          "target_entity_id": "NE-DV-CORE-001",
+          "relation_type": "mentions",
+          "source": "mock_catalog",
+          "data_layer": "L0_SYNTHETIC"
+        }
       ],
       "data_layer": "L0_SYNTHETIC",
       "source": "mock_catalog"

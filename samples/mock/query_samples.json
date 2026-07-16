@@ -21,7 +21,7 @@
   "retrieval_samples": [
     {"id": "R-001", "entity_id": "NE-DV-RAN-001", "k": 5, "expected_reason": "topology neighbor"},
     {"id": "R-002", "entity_id": "ALM-LINK-DOWN", "k": 5, "expected_reason": "knowledge/case relation"},
-    {"id": "R-003", "entity_id": "KPI-LATENCY-P95", "k": 5, "expected_reason": "description semantic overlap"},
+    {"id": "R-003", "entity_id": "KPI-LATENCY-P95", "k": 5, "expected_reason": "desc semantic overlap"},
     {"id": "R-004", "entity_id": "NE-DV-CORE-001", "k": 5, "expected_reason": "same entity type"},
     {"id": "R-005", "entity_id": "KB-CP01-DISAMBIGUATION", "k": 5, "expected_reason": "knowledge/case relation"},
     {"id": "R-006", "entity_id": "NE-DV-RAN-001", "k": 5, "expected_reason": "name/alias similarity"}

@@ -34,11 +34,11 @@ def test_contract_catalog_sample_schema_and_provenance():
     required_entity_fields = {
         "entity_id",
         "entity_type",
-        "canonical_name",
-        "aliases",
-        "description",
+        "entity_name",
+        "alias",
+        "desc",
         "attributes",
-        "relations",
+        "relationships",
         "data_layer",
         "source",
     }
@@ -72,10 +72,10 @@ def test_contract_catalog_sample_schema_and_provenance():
         assert required_entity_fields <= set(entity), entity.get("entity_id")
         assert entity["data_layer"] == "L0_SYNTHETIC"
         assert entity["source"] == "mock_catalog"
-        assert isinstance(entity["aliases"], list)
-        assert isinstance(entity["relations"], list)
+        assert isinstance(entity["alias"], list)
+        assert isinstance(entity["relationships"], list)
         assert not (forbidden_keys & set(entity))
-        for relation in entity["relations"]:
+        for relation in entity["relationships"]:
             assert required_relation_fields <= set(relation), entity["entity_id"]
             assert relation["target_entity_id"] in entity_ids
             assert relation["data_layer"] == "L0_SYNTHETIC"
@@ -104,7 +104,7 @@ def test_contract_query_and_retrieval_samples_cover_acceptance_floor():
     assert len(retrieval_samples) >= 5
     assert {
         "name/alias similarity",
-        "description semantic overlap",
+        "desc semantic overlap",
         "same entity type",
         "topology neighbor",
         "knowledge/case relation",
@@ -150,15 +150,15 @@ def test_contract_real_v1_startup_samples_are_minimal_and_annotated():
         "DV-ALM-009",
     } == entity_ids
     entity_by_id = {entity["entity_id"]: entity for entity in entities}
-    assert entity_by_id["DV-ALM-001"]["canonical_name"].startswith("ALM-505001314 ")
-    assert {"505001314", "ALM-505001314"} <= set(entity_by_id["DV-ALM-001"]["aliases"])
-    assert entity_by_id["DV-ALM-007"]["canonical_name"].startswith("ALM-101207 ")
-    assert entity_by_id["DV-ALM-008"]["canonical_name"].startswith("ALM-493011404 ")
-    assert entity_by_id["DV-ALM-009"]["canonical_name"].startswith("ALM-999999993 ")
+    assert entity_by_id["DV-ALM-001"]["entity_name"].startswith("ALM-505001314 ")
+    assert {"505001314", "ALM-505001314"} <= set(entity_by_id["DV-ALM-001"]["alias"])
+    assert entity_by_id["DV-ALM-007"]["entity_name"].startswith("ALM-101207 ")
+    assert entity_by_id["DV-ALM-008"]["entity_name"].startswith("ALM-493011404 ")
+    assert entity_by_id["DV-ALM-009"]["entity_name"].startswith("ALM-999999993 ")
     for entity in entities:
-        assert "entity_name" not in entity
-        assert "attributes" not in entity
-        assert "relations" not in entity
+        assert {"entity_id", "entity_type", "entity_name", "alias", "desc", "attributes", "relationships"} <= set(entity)
+        assert isinstance(entity["attributes"], dict)
+        assert isinstance(entity["relationships"], list)
         assert "data_layer" not in entity
         assert "source" not in entity
 
@@ -240,10 +240,10 @@ def test_contract_v3_storage_and_ner_artifacts_are_mocked_and_consistent():
     assert gauss_payload["metadata"]["entity_count"] == len(gauss_payload["entities"])
     assert redis_payload["metadata"]["word_count"] == len(redis_payload["entity_words"])
     assert golden_payload["metadata"]["query_count"] == len(golden_payload["queries"])
-    assert redis_payload["metadata"]["aliases_auto_generated"] is False
+    assert redis_payload["metadata"]["alias_auto_generated"] is False
     assert redis_payload["metadata"]["key_scope"] == [
-        "canonical_name",
-        "confirmed_aliases",
+        "entity_name",
+        "confirmed_alias",
     ]
 
     entity_ids = {item["entity_id"] for item in gauss_payload["entities"]}
@@ -251,14 +251,16 @@ def test_contract_v3_storage_and_ner_artifacts_are_mocked_and_consistent():
     assert {
         "entity_id",
         "entity_type",
-        "canonical_name",
-        "aliases",
-        "description",
+        "entity_name",
+        "alias",
+        "desc",
+        "attributes",
+        "relationships",
     } <= set(gauss_payload["entities"][0])
     assert any(
         item["entity_word"] == "CPU Usage"
         and item["normalized_key"] == "cpuusage"
-        and item["source"] == "canonical_name"
+        and item["source"] == "entity_name"
         for item in redis_payload["entity_words"]
     )
     assert any(query["expected_status"] == "partial" for query in golden_payload["queries"])
@@ -289,7 +291,8 @@ def test_contract_config_and_gitignore_keep_real_dependencies_local():
     assert "config/llm.local.json" in gitignore
     assert "samples/local_real_dv/" in gitignore
     assert "outputs/local_real_dv/" in gitignore
-    assert "Flask>=3,<4" in pyproject["project"]["dependencies"]
+    assert pyproject["project"]["dependencies"] == []
+    assert "Flask>=3,<4" in pyproject["project"]["optional-dependencies"]["web"]
 
 
 def test_contract_document_governance_is_compact_and_versioned():
@@ -703,7 +706,7 @@ def test_contract_document_governance_is_compact_and_versioned():
     assert "实体结构暂不升级" in decisions
     assert "运行时接口 Mock 独立成 SR" in decisions
     assert "KPI 类实体不再笼统使用 `kpi_metric`" in decisions
-    assert "新增 KPI/网元类实体的 `aliases` 默认都为空" in decisions
+    assert "新增 KPI/网元类实体的 `alias` 默认都为空" in decisions
     assert "V2 IR 独立评审、处置和 no-context/sealed 闭环验证已完成" in decisions
     assert "V2 SR 功能设计初稿已形成" in decisions
     assert "V2 SR 功能设计评审闭环验证已完成，结论为 closed" in decisions
@@ -794,7 +797,7 @@ def test_contract_document_governance_is_compact_and_versioned():
     assert "D077" in decisions
     assert "V3 GUI 决策确认已完成" in decisions
     assert "冲突数据加载 fail-closed" in decisions
-    assert "canonical_name" in decisions
+    assert "entity_name" in decisions
     assert "D078" in decisions
     assert "V3 需求评审、评审处置和闭环验证已完成" in decisions
     assert "D079" in decisions

@@ -74,7 +74,7 @@ V3 已由用户确认启动，V2 `AC-V2-FE-VIS-008` 遗留视觉证据问题搁�
 
 | 类别 | V3 验收关注 |
 | --- | --- |
-| Redis Mock | 覆盖 `canonical_name` + 经确认 `aliases` 到单实体 ID value 的 hit、miss、重复 key、非法 value、引用不存在 entity ID；冲突数据加载 fail-closed。 |
+| Redis Mock | 覆盖 `entity_name` + 经确认 `alias` 到单实体 ID value 的 hit、miss、重复 key、非法 value、引用不存在 entity ID；冲突数据加载 fail-closed。 |
 | 高斯 Mock | 覆盖按 entity ID 查询结构化实体、miss、重复 ID、字段缺失、schema 错误。 |
 | 两层集成 | 覆盖 Redis hit + 高斯 hit、Redis hit + 高斯 miss、Redis miss、任一层 dependency failed。 |
 | NER pipeline | 覆盖 need-linking、mention detection、span、type classification、entity-word normalization、storage lookup、内部 schema trace、多 mention、partial、ambiguous、no_match、not_required。 |

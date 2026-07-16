@@ -12,13 +12,14 @@ from ..domain.ports import (
     EntityDataDependencyError,
     EntityDataRecord,
     EntityDataOperation,
+    EntityDataHealth,
     EntityDataWriteResponse,
     EntityWordMatch,
     EntityWordMatchResponse,
 )
 
 
-class RestEntityDataClient:
+class EntityDataClientBase:
     def __init__(
         self,
         base_url: str,
@@ -77,6 +78,15 @@ class RestEntityDataClient:
             data_version=data_version,
             contract_version=str(payload.get("contract_version", "v4.entity-data.1")),
         )
+
+    def health(self) -> EntityDataHealth:
+        payload = self._execute(EntityDataOperation.HEALTH, {"client_contract_version": "v4.entity-data.1"})
+        status = payload.get("status")
+        data_version = payload.get("data_version")
+        contract_version = payload.get("contract_version")
+        if status != "healthy" or not isinstance(data_version, str) or not isinstance(contract_version, str):
+            raise EntityDataDependencyError("health_unavailable", "invalid health response")
+        return EntityDataHealth(status=status, data_version=data_version, contract_version=contract_version)
 
     def batch_get(
         self,
@@ -159,6 +169,22 @@ class RestEntityDataClient:
         if not isinstance(data_version, str):
             raise EntityDataDependencyError("schema_error", "invalid write response")
         return EntityDataWriteResponse(operation=operation, data_version=data_version, request_id=request_id)
+
+class RestEntityDataClient(EntityDataClientBase):
+    """Direct HTTP adapter retained only for local contract tests."""
+
+    def __init__(
+        self,
+        base_url: str,
+        *,
+        timeout_ms: int = 2_000,
+        opener: Callable[..., Any] = urlopen,
+    ) -> None:
+        if not base_url.strip():
+            raise ValueError("data service base_url must not be empty")
+        self._base_url = base_url.rstrip("/")
+        self._timeout_seconds = timeout_ms / 1000
+        self._opener = opener
 
     def _execute(
         self,

@@ -23,11 +23,11 @@
 | --- | --- | --- |
 | `entity_id` | 是 | 项目内部实体 ID，例如 `DV-ALM-001` |
 | `entity_type` | 是 | V1 固定为 `alarm` |
-| `canonical_name` | 是 | 标准名称，通常包含告警 ID 和英文名称 |
-| `aliases` | 是 | 可匹配别名，包含数字 ID、`ALM-...`、英文名等 |
-| `description` | 是 | 用于展示和检索解释的简短描述 |
+| `entity_name` | 是 | 标准名称，通常包含告警 ID 和英文名称 |
+| `alias` | 是 | 可匹配别名，包含数字 ID、`ALM-...`、英文名等 |
+| `desc` | 是 | 用于展示和检索解释的简短描述 |
 
-V1 样例不要求 `attributes`、`relations`、`data_layer`、`source`、`can_commit`、`sensitive_level`。后续若要固化 severity、impact、possible_causes 等 DVKnowledge 字段，必须进入新一轮实体结构决策。
+V1 样例不要求 `attributes`、`relationships`、`data_layer`、`source`、`can_commit`、`sensitive_level`。后续若要固化 severity、impact、possible_causes 等 DVKnowledge 字段，必须进入新一轮实体结构决策。
 
 ## V1 Query Sample
 
@@ -92,10 +92,10 @@ V2 已进入初始代码实现阶段。当前已落地 confirmed-sample startup 
 | 项 | V2 方向 |
 | --- | --- |
 | 实体类型 | `alarm`、`ne_type`、`ne_name`、`kpi_task_name`、`kpi_meas_objects`、`kpi_meas_type_key`。 |
-| 实体字段 | 暂沿用最小字段：`entity_id`、`entity_type`、`canonical_name`、`aliases`、`description`。 |
+| 实体字段 | 暂沿用最小字段：`entity_id`、`entity_type`、`entity_name`、`alias`、`desc`。 |
 | 结构变更 | 不默认新增字段、关系或类型专属 schema；如需要必须先确认。 |
 | 数据来源 | `alarm` 继续使用 V1 预置基线；`ne_type` 来自预置或 DVKnowledge 挖掘；`ne_name` 来源为运行时接口 Mock；KPI 子类型来源包含预置配置、DVKnowledge 挖掘和运行时接口 Mock。 |
-| 别名规则 | V2 新增 KPI/网元类实体 `aliases` 默认为空数组；任何别名必须特殊标注并经确认，不得自动生成。 |
+| 别名规则 | V2 新增 KPI/网元类实体 `alias` 默认为空数组；任何别名必须特殊标注并经确认，不得自动生成。 |
 | 数据预处理 | 统一负责预置数据、DVKnowledge KPI/网元类型候选、运行时 Mock 输出的规范化和校验。 |
 | LLM 输出 | 必须经结构化 schema 校验后才能进入链接链路；自然语言解释只能作为说明，不作为事实字段。 |
 
@@ -110,10 +110,10 @@ V2 已进入初始代码实现阶段。当前已落地 confirmed-sample startup 
 | `metadata.entity_count` | `16`，表示 V2 新增实体数量 |
 | `metadata.base_entity_files` | `samples/real/entity_examples.json`，合并 9 个 V1 `alarm` 实体 |
 | unified catalog count | `25`，包含 9 个 `alarm` 和 16 个 V2 新增实体 |
-| `metadata.aliases_default_empty` | `true` |
+| `metadata.alias_default_empty` | `true` |
 | `metadata.kpi_meas_objects_included` | `false` |
 
-V2 新增实体仍只包含 `entity_id`、`entity_type`、`canonical_name`、`aliases`、`description`。本轮所有新增实体 `aliases` 均为空数组。
+V2 新增实体仍只包含 `entity_id`、`entity_type`、`entity_name`、`alias`、`desc`。本轮所有新增实体 `alias` 均为空数组。
 
 `samples/real/v2_query_samples.json` 是 V2 Query 启动样例。
 
@@ -135,10 +135,10 @@ V3 已完成 GUI 决策确认、需求评审、评审处置、需求闭环验证
 | 项 | V3 方向 |
 | --- | --- |
 | 版本目标 | 搁置 V2 遗留视觉证据问题，启动 V3 两层存储和 NER 详细设计；Human Decision Gate 已通过 GUI 确认关闭。 |
-| Redis Mock | 实体词到实体 ID 的 KV 缓存接口 Mock；key 来自 `canonical_name` + 经确认 `aliases`，value 是单实体 ID；不自动生成别名。 |
+| Redis Mock | 实体词到实体 ID 的 KV 缓存接口 Mock；key 来自 `entity_name` + 经确认 `alias`，value 是单实体 ID；不自动生成别名。 |
 | 高斯 Mock | 结构化实体数据接口 Mock；至少支持按 `entity_id` 查询实体记录。 |
 | 默认外部依赖 | 默认不连接真实 Redis、真实 GaussDB、真实 DV 生产接口或真实 LLM；当前实现仅加载本地 JSON Mock。 |
-| 实体结构 | V3 初始继续沿用最小实体字段：`entity_id`、`entity_type`、`canonical_name`、`aliases`、`description`；类型专属字段后续另行确认。 |
+| 实体结构 | V3 初始继续沿用最小实体字段：`entity_id`、`entity_type`、`entity_name`、`alias`、`desc`；类型专属字段后续另行确认。 |
 | NER 输出 | 需显式表达 query/mention 状态、span、normalized text、entity-word key、candidate type、Redis lookup 状态、高斯 lookup 状态、候选实体和结构化错误。 |
 | NER 内部 schema | 允许内部 schema 扩展，用于 stage trace、storage lookup 和重构隔离；外部 API 与样例提交字段受控。 |
 | LLM 角色 | 默认离线 deterministic 可回归；LLM 仅作为可选分类、解释或 rerank 增强。 |
@@ -152,13 +152,13 @@ V3 已完成 GUI 决策确认、需求评审、评审处置、需求闭环验证
 | --- | --- |
 | `metadata.schema_version` | 当前为 `v3.redis_entity_words.1`。 |
 | `metadata.word_count` | 当前为 `11`。 |
-| `metadata.key_scope` | 固定为 `canonical_name` 和 `confirmed_aliases`。 |
-| `metadata.aliases_auto_generated` | 当前必须为 `false`。 |
+| `metadata.key_scope` | 固定为 `entity_name` 和 `confirmed_alias`。 |
+| `metadata.alias_auto_generated` | 当前必须为 `false`。 |
 | `entity_words[]` | Redis Mock KV 列表。 |
-| `entity_word` | Redis key 的语义字段，表示实体词，来源限于 `canonical_name` 和经确认 `aliases`。 |
+| `entity_word` | Redis key 的语义字段，表示实体词，来源限于 `entity_name` 和经确认 `alias`。 |
 | `normalized_key` | 运行时按 Unicode NFKC、`casefold()`、移除 whitespace 重新计算并校验。 |
 | `entity_id` | Redis value 的语义字段，表示实体 ID。当前按单值处理；重复 key 冲突加载 fail-closed。 |
-| `source` | 只允许 `canonical_name` 或 `confirmed_alias`，不得包含真实生产路径或敏感连接信息。 |
+| `source` | 只允许 `entity_name` 或 `confirmed_alias`，不得包含真实生产路径或敏感连接信息。 |
 | `normalization_version` | 当前为 `v3.entity_word_norm.1`。 |
 
 ### V3 高斯 Mock 查询
@@ -170,9 +170,9 @@ V3 已完成 GUI 决策确认、需求评审、评审处置、需求闭环验证
 | `entities[]` | 高斯 Mock 结构化实体列表。 |
 | `entity_id` | 查询主键。 |
 | `entity_type` | 实体类型。 |
-| `canonical_name` | 标准名。 |
-| `aliases` | 经确认别名列表。 |
-| `description` | 展示和检索解释所需的简短描述。 |
+| `entity_name` | 标准名。 |
+| `alias` | 经确认别名列表。 |
+| `desc` | 展示和检索解释所需的简短描述。 |
 
 ### V3 NER Golden Cases
 

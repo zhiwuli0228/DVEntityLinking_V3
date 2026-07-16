@@ -66,7 +66,7 @@ export function CatalogFilterZone({
                   }`}
                 >
                   <div className="text-xs font-semibold text-shell-ink break-words">{it.entity_id}</div>
-                  <div className="text-[11px] text-shell-ink break-words">{it.canonical_name}</div>
+                  <div className="text-[11px] text-shell-ink break-words">{it.entity_name}</div>
                   <div className="text-[10px] text-shell-muted">{it.entity_type}</div>
                 </button>
               </li>

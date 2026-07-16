@@ -41,7 +41,7 @@ scripts/run_web_demo.py (单 Web 入口)
 
 ### 3.1 数据契约
 
-- **实体（EntityRecord）**：最小字段 `entity_id`、`entity_type`、`canonical_name`、`aliases`、`description`；可选 `attributes`、`relations`、`data_layer`、`source`。V3 结构化实体沿用最小字段，类型专属字段待后续确认。
+- **实体（EntityRecord）**：最小字段 `entity_id`、`entity_type`、`entity_name`、`alias`、`desc`；可选 `attributes`、`relationships`、`data_layer`、`source`。V3 结构化实体沿用最小字段，类型专属字段待后续确认。
 - **Query 样例**：`id`、`query`、`mentions[]`（`text`、`span` 0-based end-exclusive、`expected_entity_ids`、mention-level `expected_status`）、`expected_entities`、`expected_status`。V2 起支持多 mention，V2 Query 全英文。
 - **链接结果（EntityLinkResult）**：`status`、`mentions[]`、`mention_results[]`、`linked_entity`、`candidates[]`、`confidence`、`disambiguation_reason`、`no_match_reason`、`bypass_reason`、`degraded`、`error_code`、`data_layer`、`source`、`stage_trace`（V3）、`mode_status`、`llm_explanations[]`。
 - **安全投影**：`attributes_safe[]` 白名单（`SAFE_ATTRIBUTE_KEYS`）+ `FORBIDDEN_ATTRIBUTE_FRAGMENTS` 拦截 `api_key`/`token`/`secret`/`base_url`/`raw_request`/`raw_response` 等；`omitted_attribute_count` 计数；API 不回显真实 key/token/base URL/raw prompt/raw response。
@@ -56,9 +56,9 @@ scripts/run_web_demo.py (单 Web 入口)
 
 ### 3.3 两层存储设计（V3）
 
-- **Redis Mock（实体词 KV 缓存）**：key=规范化实体词（`normalize_entity_word`：NFKC + casefold + 去空白），value=单实体 ID。`key_scope` 强约束为 `['canonical_name','confirmed_aliases']`，`aliases_auto_generated` 必须为 false（D074：不自动生成别名）。duplicate key 映射多 ID → fail-closed；同 ID 重复 → 去重并 warning。
+- **Redis Mock（实体词 KV 缓存）**：key=规范化实体词（`normalize_entity_word`：NFKC + casefold + 去空白），value=单实体 ID。`key_scope` 强约束为 `['entity_name','confirmed_alias']`，`alias_auto_generated` 必须为 false（D074：不自动生成别名）。duplicate key 映射多 ID → fail-closed；同 ID 重复 → 去重并 warning。
 - **Gauss Mock（结构化实体存储）**：按 entity_id 查询 `StructuredEntityRecord`。duplicate entity_id、缺失必需字段、schema 错误 → fail-closed。
-- **cross-layer validation**：Redis entity_id 必须在 Gauss 存在（否则 dangling），entity_word 必须是引用实体的 canonical_name 或 confirmed alias（否则 unconfirmed_data_layer）。
+- **cross-layer validation**：Redis entity_id 必须在 Gauss 存在（否则 dangling），entity_word 必须是引用实体的 entity_name 或 confirmed alias（否则 unconfirmed_data_layer）。
 - **V3CatalogAdapter**：把 `EntityStorageRepository` 适配为 catalog 接口（`entities`/`get`/`by_type`/`search`/`neighbors`），`neighbors` 当前返回空（无关系建模）。
 
 ### 3.4 NER 与链接策略

@@ -26,6 +26,16 @@ class EntitySummaryV1:
 
 
 @dataclass(frozen=True)
+class CandidateResponseV1:
+    entity_id: str
+    entity_name: str
+    entity_type: str
+    confidence: float
+    rank: int = 1
+    match_reason: str = ""
+
+
+@dataclass(frozen=True)
 class MentionResponseV1:
     text: str
     span: tuple[int, int]
@@ -33,6 +43,16 @@ class MentionResponseV1:
     entity: EntitySummaryV1 | None = None
     match_mode: str = "EXACT_WORD"
     reason: str = ""
+    source: str = "deterministic"
+    predicted_type: str | None = None
+    normalized_text: str = ""
+    confidence: float | None = None
+    candidates: tuple[CandidateResponseV1, ...] = ()
+    no_match_reason: str = ""
+    disambiguation_reason: str = ""
+    degraded: bool = False
+    error_code: str | None = None
+    storage_lookup: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -45,3 +65,9 @@ class LinkResponseV1:
     degraded: bool = False
     data_version: str = ""
     service_trace: tuple[dict[str, Any], ...] = ()
+    candidates: tuple[CandidateResponseV1, ...] = ()
+    no_match_reason: str = ""
+    bypass_reason: str = ""
+    fallback_available: bool = True
+    mode_status: dict[str, Any] = field(default_factory=dict)
+    errors: tuple[dict[str, str], ...] = ()

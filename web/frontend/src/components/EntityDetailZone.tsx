@@ -24,11 +24,11 @@ export function EntityDetailZone({
           <dl className="grid grid-cols-2 gap-2">
             <Metric label="entity_id" value={entity.entity_id} />
             <Metric label="entity_type" value={entity.entity_type} />
-            <Metric label="canonical_name" value={entity.canonical_name} />
-            <Metric label="aliases" value={entity.aliases.join(", ") || "-"} />
+            <Metric label="entity_name" value={entity.entity_name} />
+            <Metric label="alias" value={entity.alias.join(", ") || "-"} />
           </dl>
-          {entity.description && (
-            <p className="text-xs text-shell-muted break-words">{entity.description}</p>
+          {entity.desc && (
+            <p className="text-xs text-shell-muted break-words">{entity.desc}</p>
           )}
           <div>
             <div className="text-[10px] font-bold uppercase tracking-wider text-shell-muted mb-1">safe attributes</div>
@@ -48,6 +48,20 @@ export function EntityDetailZone({
               <div className="text-[10px] text-shell-muted mt-1">omitted_attribute_count: {entity.omitted_attribute_count}</div>
             )}
           </div>
+          <div>
+            <div className="text-[10px] font-bold uppercase tracking-wider text-shell-muted mb-1">relationships</div>
+            {entity.relationships.length > 0 ? (
+              <ul className="flex flex-col gap-1">
+                {entity.relationships.map((relationship) => (
+                  <li key={`${relationship.relation_type}:${relationship.target_entity_id}`} className="rounded-md border border-shell-border bg-shell-panelSoft px-2 py-1 text-xs">
+                    <span className="font-semibold text-shell-ink">{relationship.relation_type}</span>: {relationship.target_entity_id}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <EmptyHint>No relationships.</EmptyHint>
+            )}
+          </div>
           {retrieval && retrieval.items.length > 0 && (
             <div>
               <div className="text-[10px] font-bold uppercase tracking-wider text-shell-muted mb-1">similar entities</div>
@@ -55,7 +69,7 @@ export function EntityDetailZone({
                 {retrieval.items.map((it) => (
                   <li key={it.entity_id} className="rounded-md border border-shell-border bg-shell-panelSoft px-2 py-1 text-xs">
                     <span className="font-semibold text-shell-ink">{it.entity_id}</span>{" "}
-                    <span className="text-shell-ink">{it.canonical_name}</span>
+                    <span className="text-shell-ink">{it.entity_name}</span>
                     <div className="text-[10px] text-shell-muted break-words">{it.entity_type} · {it.similarity_reason}</div>
                   </li>
                 ))}
