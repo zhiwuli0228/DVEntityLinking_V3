@@ -1,0 +1,7 @@
+{
+  "contract_version": "v4.link-response.1",
+  "request_fields": ["query", "agent_context", "entity_types", "extraction_mode", "allow_fallback"],
+  "response_fields": ["contract_version", "query", "status", "mentions", "error_code", "degraded", "data_version", "service_trace", "candidates", "no_match_reason", "bypass_reason", "fallback_available", "mode_status", "errors"],
+  "statuses": ["linked", "partial", "ambiguous", "no_match", "not_required", "dependency_failed", "invalid_input"],
+  "compatibility_rule": "Existing fields retain their V4 meaning; V4.1 additions must be optional."
+}
