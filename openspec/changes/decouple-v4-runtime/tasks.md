@@ -15,3 +15,11 @@
 - [x] 3.1 Add V4.1 traceability, compatibility-difference, and historical-asset deprecation registers linked to OpenSpec task and test IDs.
 - [x] 3.2 Run focused V4/V4.1 tests and the complete test suite; record the commands and results in the traceability register.
 - [x] 3.3 Review the implementation against all four V4.1 capability specifications and close or register any remaining approved difference.
+
+## 4. Migration and cutover completion
+
+- [x] 4.1 Add a repeatable dry-run migration command, execute it against the approved repository sample, and record its sanitized result.
+- [x] 4.2 Prepare the V4.1 pre-production checklist with the required V4 baseline, authorized data export, host inventory, and rollback inputs.
+- [ ] 4.3 **Deferred, non-blocking:** execute the authorized production data migration, Entity Data IR smoke test, and mirror/gray comparison when an external environment is available; record the evidence and approved rollback target.
+- [x] 4.4 Record the user-confirmed preservation of historical assets, their V4 runtime prohibition, and their future deletion gate in the deprecation register.
+- [x] 4.5 Resolve the V4.1 entity-word conflict found by dry-run validation and rerun the canonical export validation successfully.

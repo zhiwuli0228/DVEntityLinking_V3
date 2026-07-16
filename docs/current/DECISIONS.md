@@ -99,6 +99,8 @@
 | D089 | 2026-06-26 | V3 验收候选记录已准备，见 [../releases/V3.md](../releases/V3.md)。当前状态为 `Acceptance candidate prepared; pending user acceptance; not accepted/closed`；候选覆盖 Redis Mock、Gauss Mock、storage-backed NER pipeline、V3 mock artifacts、V3 golden cases、V1/V2 技术回归和默认离线 deterministic 验证。V3 accepted/closed 仍需用户后续确认。 |
 | D090 | 2026-06-26 | 前端大整改：`GET /` 改由 React SPA 提供（`web/frontend`，Vite+React+TS+Tailwind），`scripts\run_web_demo.py` 仍为单入口托管 `dist`。后端仅 `src/dv_entity_linking/web.py` 的 `GET /`+`/assets` 路由调整，旧 SSR 保留在 `GET /classic` 供 acceptance smoke；V2 数据/算法/评测/样例和 V3 存储层不动。整改吸收 SigNoz（状态带密度）、doccano（Query 内 mention span 内联高亮）、CopilotKit（LLM 解释组件化）、Tremor（深色工作台 shell）原型原则。新增 `scripts/capture_screenshots.py`（playwright，dev-only）和 `scripts/requirements-dev.txt`。`tests/test_web.py` 删除 3 个 SSR HTML 断言、新增 SPA shell 断言。前端单测 `vitest` `3 passed`；全量 `pytest` `92 passed`；`compileall` 通过。 |
 | D091 | 2026-06-26 | V2 `AC-V2-FE-VIS-008` before 同场景截图已补齐：整改前按 canonical scenario 采集 `outputs/logs/v2_frontend_before_desktop_1366x768.png` 和 `_narrow_390x844.png`，整改后采集 after 同场景截图；`scripts/run_v2_acceptance_smoke.py` 已接入 before 证据检测，真实运行 `visual_traceability_blocking_count=0`、`AC-V2-FE-VIS-008` 不再 blocking。`outputs/**` 不入库，截图作为本地证据保留。 |
+| D092 | 2026-07-16 | V4.1 canonical entity dry-run 发现 `DV-ALM-002` 与 `DV-ALM-003` 的通用 confirmed alias 归一化冲突。用户确认按方案 1 处理：通用短语 `certificate is about to expire` 仅保留给 `DV-ALM-002`；从 `DV-ALM-003` 移除大小写等价的 alias，保留 `ALM-100003` 等带编号标识。该短语的历史结果由 ambiguous 调整为稳定链接 `DV-ALM-002`。 |
+| D093 | 2026-07-16 | 用户确认 V4.1 的真实数据发布、Entity Data IR 冒烟、镜像/灰度与回退演练（OpenSpec 4.3）当前无条件执行，作为 deferred 发布遗留，不阻断 V4 功能与代码基线完整。历史 V1–V3 资产（OpenSpec 4.4）暂时预留作回归与审计，但必须持续禁止进入 V4/V4.1 默认运行链；V4 功能完整性记录据此生成。 |
 
 ## 仍需后续确认
 

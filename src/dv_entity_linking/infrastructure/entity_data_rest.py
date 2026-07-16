@@ -4,8 +4,7 @@ from __future__ import annotations
 
 import json
 from typing import Any, Callable
-from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+from urllib.request import urlopen
 
 from ..domain.ports import (
     EntityBatchGetResponse,
@@ -17,6 +16,7 @@ from ..domain.ports import (
     EntityWordMatch,
     EntityWordMatchResponse,
 )
+from .rest_tool import RestRequest, RestRequestError, RestRequestTool, UrlopenTransport
 
 
 class EntityDataClientBase:
@@ -31,7 +31,7 @@ class EntityDataClientBase:
             raise ValueError("data service base_url must not be empty")
         self._base_url = base_url.rstrip("/")
         self._timeout_seconds = timeout_ms / 1000
-        self._opener = opener
+        self._tool = RestRequestTool(UrlopenTransport(opener))
 
     def match_words(
         self,
@@ -184,7 +184,7 @@ class RestEntityDataClient(EntityDataClientBase):
             raise ValueError("data service base_url must not be empty")
         self._base_url = base_url.rstrip("/")
         self._timeout_seconds = timeout_ms / 1000
-        self._opener = opener
+        self._tool = RestRequestTool(UrlopenTransport(opener))
 
     def _execute(
         self,
@@ -200,26 +200,10 @@ class RestEntityDataClient(EntityDataClientBase):
         }
         if request_id is not None:
             envelope["request_id"] = request_id
-        request = Request(
-            f"{self._base_url}/v1/entity-data:execute",
-            data=json.dumps(envelope).encode("utf-8"),
-            headers={"Content-Type": "application/json", "Accept": "application/json"},
-            method="POST",
-        )
         try:
-            with self._opener(request, timeout=self._timeout_seconds) as response:
-                body = response.read().decode("utf-8")
-        except HTTPError as exc:
-            code = "auth_error" if exc.code in {401, 403} else "http_error"
-            raise EntityDataDependencyError(code) from exc
-        except URLError as exc:
-            raise EntityDataDependencyError("transport_error") from exc
-        except TimeoutError as exc:
-            raise EntityDataDependencyError("timeout") from exc
-        try:
-            decoded = json.loads(body)
-        except json.JSONDecodeError as exc:
-            raise EntityDataDependencyError("schema_error", "response is not JSON") from exc
+            decoded = self._tool.execute(RestRequest("POST", f"{self._base_url}/v1/entity-data:execute", json_body=envelope, headers={"Content-Type": "application/json"}, timeout_ms=int(self._timeout_seconds * 1000), idempotency_key=request_id)).body
+        except RestRequestError as exc:
+            raise EntityDataDependencyError(exc.code) from exc
         if not isinstance(decoded, dict):
             raise EntityDataDependencyError("schema_error", "response root must be object")
         if decoded.get("operation") != operation.value or decoded.get("status") != "success":

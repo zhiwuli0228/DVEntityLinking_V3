@@ -182,7 +182,8 @@ def test_v1_acceptance_smoke_script_runs_offline(tmp_path):
     assert payload["entity_count"] == 9
     assert payload["type_counts"] == {"alarm": 9}
     assert payload["exact_linked_entity_id"] == "DV-ALM-002"
-    assert payload["ambiguous_status"] == "ambiguous"
+    assert payload["shared_phrase_status"] == "linked"
+    assert payload["shared_phrase_linked_entity_id"] == "DV-ALM-002"
     assert payload["short_id_no_match_status"] == "no_match"
     assert payload["not_required_status"] == "not_required"
     assert payload["html_mode_controls_present"] is True

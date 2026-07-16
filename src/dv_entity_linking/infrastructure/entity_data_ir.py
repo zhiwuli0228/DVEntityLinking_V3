@@ -10,6 +10,7 @@ from ..domain.ports import (
     InternalRouteClient,
 )
 from .entity_data_base import EntityDataClientBase
+from .rest_tool import PlatformIrTransport, RestRequest, RestRequestError, RestRequestTool
 
 
 class IrEntityDataClient(EntityDataClientBase):
@@ -25,7 +26,7 @@ class IrEntityDataClient(EntityDataClientBase):
         if not ir_url.strip():
             raise ValueError("entity data IR URL must not be empty")
         self._ir_url = ir_url
-        self._platform_client = platform_client
+        self._tool = RestRequestTool(PlatformIrTransport(platform_client))
         self._timeout_ms = timeout_ms
 
     def _execute(
@@ -43,17 +44,9 @@ class IrEntityDataClient(EntityDataClientBase):
         if request_id is not None:
             envelope["request_id"] = request_id
         try:
-            decoded = self._platform_client.invoke(
-                url=self._ir_url,
-                payload=envelope,
-                timeout_ms=self._timeout_ms,
-            )
-        except PermissionError as exc:
-            raise EntityDataDependencyError("auth_error") from exc
-        except TimeoutError as exc:
-            raise EntityDataDependencyError("timeout") from exc
-        except ConnectionError as exc:
-            raise EntityDataDependencyError("transport_error") from exc
+            decoded = self._tool.execute(RestRequest("POST", self._ir_url, json_body=envelope, timeout_ms=self._timeout_ms)).body
+        except RestRequestError as exc:
+            raise EntityDataDependencyError(exc.code) from exc
         if not isinstance(decoded, dict):
             raise EntityDataDependencyError("schema_error", "response root must be object")
         if decoded.get("operation") != operation.value or decoded.get("status") != "success":

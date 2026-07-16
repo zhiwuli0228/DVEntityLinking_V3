@@ -54,9 +54,9 @@ def run_smoke(app, mode: str) -> dict:
     summary["id_and_name_status"] = id_and_name.get("status")
     summary["id_and_name_linked_entity_id"] = (id_and_name.get("linked_entity") or {}).get("entity_id")
 
-    ambiguous = _link(client, "What should I do if certificate is about to expire?", mode)
-    summary["ambiguous_status"] = ambiguous.get("status")
-    summary["ambiguous_candidate_ids"] = _candidate_ids(ambiguous)
+    shared_phrase = _link(client, "What should I do if certificate is about to expire?", mode)
+    summary["shared_phrase_status"] = shared_phrase.get("status")
+    summary["shared_phrase_linked_entity_id"] = (shared_phrase.get("linked_entity") or {}).get("entity_id")
 
     no_match = _link(client, "What is alarm 51?", mode)
     summary["short_id_no_match_status"] = no_match.get("status")
@@ -133,8 +133,8 @@ def run_smoke(app, mode: str) -> dict:
             summary["exact_linked_entity_id"] == "DV-ALM-002",
             summary["id_and_name_status"] == "linked",
             summary["id_and_name_linked_entity_id"] == "DV-ALM-002",
-            summary["ambiguous_status"] == "ambiguous",
-            {"DV-ALM-002", "DV-ALM-003"} <= set(summary["ambiguous_candidate_ids"]),
+            summary["shared_phrase_status"] == "linked",
+            summary["shared_phrase_linked_entity_id"] == "DV-ALM-002",
             summary["short_id_no_match_status"] == "no_match",
             summary["short_id_candidate_count"] == 0,
             summary["not_required_status"] == "not_required",

@@ -1,6 +1,6 @@
 # DVEntityLinking 文档导航
 
-最后更新：2026-06-26
+最后更新：2026-07-16
 
 本目录采用精简文档结构：当前状态和规则放在少量权威文档中，IR/SR 主输出件按版本保留，关闭版本、验收候选版本或撤回验收候选只保留一份 release/acceptance record。评审输入、闭环输入、临时过程记录和重复 README 已合并或清理；需要过程细节时通过 Git 历史追溯。
 
@@ -8,7 +8,7 @@
 
 | 文件 | 用途 |
 | --- | --- |
-| [PROJECT.md](./PROJECT.md) | 项目当前状态、范围、约束、版本结论和 V3 当前方向 |
+| [PROJECT.md](./PROJECT.md) | 项目当前状态、范围、约束、版本结论和 V4/V4.1 当前方向 |
 | [DV_CONTEXT.md](./DV_CONTEXT.md) | DV 背景、真实内容确认规则和 Mock 边界 |
 | [USAGE.md](./USAGE.md) | 启动、测试、日志和 API 使用说明 |
 | [current/DATA_CONTRACT.md](./current/DATA_CONTRACT.md) | 当前实体、Query、LinkResult 和 LLM 配置边界 |
@@ -26,6 +26,7 @@
 | V3 | [baselines/v3/IR.md](./baselines/v3/IR.md)、[baselines/v3/IR-SR-DECOMPOSITION.md](./baselines/v3/IR-SR-DECOMPOSITION.md)、[baselines/v3/REQUIREMENT-REVIEW.md](./baselines/v3/REQUIREMENT-REVIEW.md)、[baselines/v3/REQUIREMENT-REVIEW-DISPOSITION.md](./baselines/v3/REQUIREMENT-REVIEW-DISPOSITION.md)、[baselines/v3/REQUIREMENT-CLOSURE-VERIFICATION.md](./baselines/v3/REQUIREMENT-CLOSURE-VERIFICATION.md) | [baselines/v3/SR.md](./baselines/v3/SR.md)、[baselines/v3/FUNCTION-DESIGN-REVIEW.md](./baselines/v3/FUNCTION-DESIGN-REVIEW.md)、[baselines/v3/FUNCTION-DESIGN-REVIEW-DISPOSITION.md](./baselines/v3/FUNCTION-DESIGN-REVIEW-DISPOSITION.md)、[baselines/v3/FUNCTION-DESIGN-CLOSURE-VERIFICATION.md](./baselines/v3/FUNCTION-DESIGN-CLOSURE-VERIFICATION.md)、[baselines/v3/IMPLEMENTATION.md](./baselines/v3/IMPLEMENTATION.md)、[baselines/v3/IMPLEMENTATION-REVIEW.md](./baselines/v3/IMPLEMENTATION-REVIEW.md)、[baselines/v3/IMPLEMENTATION-REVIEW-DISPOSITION.md](./baselines/v3/IMPLEMENTATION-REVIEW-DISPOSITION.md)、[baselines/v3/IMPLEMENTATION-CLOSURE-VERIFICATION.md](./baselines/v3/IMPLEMENTATION-CLOSURE-VERIFICATION.md)、[baselines/v3/TEST-DESIGN.md](./baselines/v3/TEST-DESIGN.md)、[baselines/v3/TEST-REVIEW.md](./baselines/v3/TEST-REVIEW.md)、[baselines/v3/TEST-REVIEW-DISPOSITION.md](./baselines/v3/TEST-REVIEW-DISPOSITION.md)、[baselines/v3/TEST-CLOSURE-VERIFICATION.md](./baselines/v3/TEST-CLOSURE-VERIFICATION.md)、[baselines/v3/ACCEPTANCE-PRECHECK.md](./baselines/v3/ACCEPTANCE-PRECHECK.md)、[baselines/v3/ACCEPTANCE-PRECHECK-VERIFICATION.md](./baselines/v3/ACCEPTANCE-PRECHECK-VERIFICATION.md) |
 | V4 | [baselines/v4/IR.md](./baselines/v4/IR.md) | [baselines/v4/SR.md](./baselines/v4/SR.md) |
 | V4.1 | [baselines/v4.1/IR.md](./baselines/v4.1/IR.md) | [baselines/v4.1/SR.md](./baselines/v4.1/SR.md) |
+| V5 | [baselines/v5/IR.md](./baselines/v5/IR.md) | [baselines/v5/SR.md](./baselines/v5/SR.md) |
 
 ## Release / Acceptance Records
 
@@ -45,6 +46,7 @@
 | V1 | [releases/V1.md](./releases/V1.md) |
 | V2 | [releases/V2.md](./releases/V2.md)，验收候选因视觉风格补救不足再次退回，当前视觉风格补救验收前置核查已生成，after 证据已补采且用户确认当前 after 视觉 accepted；before 同场景截图或替代 before 证据口径仍未确认 |
 | V3 | [releases/V3.md](./releases/V3.md)，验收候选已准备，等待用户验收确认；尚未 accepted/closed |
+| V4 | [releases/V4.md](./releases/V4.md)，功能与代码基线完整；真实生产切换作为 V4.1 deferred 发布项保留。 |
 
 ## 维护规则
 

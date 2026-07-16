@@ -1,6 +1,6 @@
 # DVEntityLinking 项目总览
 
-最后更新：2026-06-26
+最后更新：2026-07-16
 
 本文档是项目当前状态、范围、约束和后续规划的唯一权威入口。历史版本细节见 `docs/releases/`，IR/SR 主输出件见 `docs/baselines/`。
 
@@ -8,9 +8,9 @@
 
 | 项 | 状态 |
 | --- | --- |
-| 当前版本 | V3 acceptance candidate prepared; pending user acceptance; not accepted/closed |
-| 已关闭版本 | V0、V1 |
-| 当前活跃迭代 | V3 验收候选前置核查和核验已通过，候选记录已准备；重点交付为两层存储、Redis 缓存接口 Mock、高斯数据库接口 Mock 和 NER pipeline 详细设计/必要重构 |
+| 当前版本 | V4 功能与代码基线完整；V4.1 负责解耦与迁移治理，真实生产切换 deferred |
+| 已关闭版本 | V0、V1；V4 功能完整性记录已生成，未声明生产已切换 |
+| 当前活跃迭代 | V5：实体构建、独立 REST 请求边界与定时实体更新，当前处于 IR/SR 设计阶段；V4.1 外部生产切换继续等待授权环境 |
 | 技术栈 | Python 3.12、Flask Web/API、OpenAI-compatible LLM adapter |
 | 默认验收模式 | `offline_demo`，不依赖真实 DV 和真实 LLM |
 

@@ -167,7 +167,7 @@ def test_contract_real_v1_startup_samples_are_minimal_and_annotated():
     assert query_metadata["max_one_entity_mention_per_query"] is True
     assert len(queries) == 16
     statuses = {query["expected_status"] for query in queries}
-    assert {"linked", "ambiguous", "no_match", "not_required"} <= statuses
+    assert {"linked", "no_match", "not_required"} <= statuses
 
     for query in queries:
         assert "word2entity" not in query
@@ -200,11 +200,8 @@ def test_contract_real_v1_startup_samples_are_minimal_and_annotated():
             assert set(expected) == {"entity_id"}
 
     query_by_id = {query["id"]: query for query in queries}
-    assert query_by_id["Q-005"]["expected_status"] == "ambiguous"
-    assert {
-        "DV-ALM-002",
-        "DV-ALM-003",
-    } == set(query_by_id["Q-005"]["mentions"][0]["expected_entity_ids"])
+    assert query_by_id["Q-005"]["expected_status"] == "linked"
+    assert ["DV-ALM-002"] == query_by_id["Q-005"]["mentions"][0]["expected_entity_ids"]
     assert query_by_id["Q-012"]["expected_status"] == "no_match"
     assert query_by_id["Q-012"]["expected_entities"] == []
     assert query_by_id["Q-012"]["mentions"][0]["text"] == "51"
@@ -515,24 +512,22 @@ def test_contract_document_governance_is_compact_and_versioned():
         "docs/confirmations/2026-06-24-dv-entity-linking-v3-decision-confirmation.json"
     )
 
-    assert (
-        "V3 acceptance candidate prepared; pending user acceptance; not accepted/closed"
-        in root_readme
-    )
-    assert (
-        "V3 acceptance candidate prepared; pending user acceptance; not accepted/closed"
-        in project
-    )
-    assert "V3 验收候选前置核查和核验已通过" in project
+    assert "V4 功能与代码基线完整；未声明真实生产已切换" in root_readme
+    assert "V4 功能与代码基线完整；V4.1 负责解耦与迁移治理" in project
+    assert "真实生产切换 deferred" in project
     assert "before 同场景截图或替代 before 证据口径未确认" in project
     assert "docs/baselines/v0/" in root_readme
     assert "docs/baselines/v1/" in root_readme
     assert "docs/baselines/v2/" in root_readme
     assert "docs/baselines/v3/" in root_readme
+    assert "docs/baselines/v4/" in root_readme
+    assert "docs/baselines/v4.1/" in root_readme
     assert "评审输入、闭环输入" in docs_readme
     assert "IR、SR 主输出件按版本保留" in docs_readme
     assert "baselines/v2/IR.md" in docs_readme
     assert "baselines/v3/IR.md" in docs_readme
+    assert "baselines/v4/IR.md" in docs_readme
+    assert "baselines/v4.1/IR.md" in docs_readme
     assert "baselines/v3/IR-SR-DECOMPOSITION.md" in docs_readme
     assert "baselines/v3/REQUIREMENT-REVIEW.md" in docs_readme
     assert "baselines/v3/REQUIREMENT-REVIEW-DISPOSITION.md" in docs_readme
@@ -552,6 +547,7 @@ def test_contract_document_governance_is_compact_and_versioned():
     assert "baselines/v3/ACCEPTANCE-PRECHECK.md" in docs_readme
     assert "baselines/v3/ACCEPTANCE-PRECHECK-VERIFICATION.md" in docs_readme
     assert "releases/V3.md" in docs_readme
+    assert "releases/V4.md" in docs_readme
     assert "IR-FRONTEND-REMEDIATION.md" in docs_readme
     assert "IR-FRONTEND-VISUAL-REMEDIATION.md" in docs_readme
     assert "FRONTEND-VISUAL-REMEDIATION-REQUIREMENT-REVIEW.md" in docs_readme

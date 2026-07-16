@@ -104,18 +104,14 @@
             50
           ],
           "expected_entity_ids": [
-            "DV-ALM-002",
-            "DV-ALM-003"
+            "DV-ALM-002"
           ]
         }
       ],
-      "expected_status": "ambiguous",
+      "expected_status": "linked",
       "expected_entities": [
         {
           "entity_id": "DV-ALM-002"
-        },
-        {
-          "entity_id": "DV-ALM-003"
         }
       ]
     },

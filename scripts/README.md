@@ -16,6 +16,7 @@
 | `run_v2_evaluation.py` | 运行 V2 12 条启动 Query 的 query-level、mention-level 和 type-level 验收评测。 |
 | `run_v3_acceptance_smoke.py` | PyCharm 或命令行直接运行 V3 两层存储 + NER pipeline smoke，输出 JSON 摘要并写日志。 |
 | `run_v3_evaluation.py` | 运行 V3 NER golden cases 的 precision/recall 和负例误报评测。 |
+| `run_v41_migration_dry_run.py` | 校验 canonical entity JSON 导出并生成 V4.1 安全迁移 dry-run 报告；不发布数据。 |
 
 日志默认写入 `outputs/logs/`，该目录被 `.gitignore` 忽略。
 

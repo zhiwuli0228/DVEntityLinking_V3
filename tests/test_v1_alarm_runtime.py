@@ -46,7 +46,6 @@ def test_v1_alarm_catalog_and_query_dataset_load(alarm_catalog):
     assert len(dataset.queries) == 16
     assert {sample.expected_status for sample in dataset.queries} >= {
         Status.LINKED,
-        Status.AMBIGUOUS,
         Status.NO_MATCH,
         Status.NOT_REQUIRED,
     }
@@ -122,15 +121,12 @@ def test_v1_alarm_short_id_substring_guards(alarm_service):
     assert no_alarm_intent.candidates == []
 
 
-def test_v1_alarm_ambiguous_phrase_returns_all_expected_candidates(alarm_service):
+def test_v1_alarm_shared_phrase_uses_confirmed_v41_owner(alarm_service):
     result = alarm_service.link_query("What should I do if certificate is about to expire?")
 
-    assert result.status == Status.AMBIGUOUS
-    assert {candidate.entity_id for candidate in result.candidates[:5]} >= {
-        "DV-ALM-002",
-        "DV-ALM-003",
-    }
-    assert result.linked_entity is None
+    assert result.status == Status.LINKED
+    assert result.linked_entity is not None
+    assert result.linked_entity.entity_id == "DV-ALM-002"
 
 
 def test_v1_query_dataset_loader_fails_closed_on_bad_span(tmp_path, alarm_catalog):

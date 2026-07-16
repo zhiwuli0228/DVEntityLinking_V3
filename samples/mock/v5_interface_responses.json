@@ -1,0 +1,6 @@
+{
+  "runtime": {"entities": [{"entity_id": "DV-RUN-001", "entity_type": "alarm", "entity_name": "ALM-200 Runtime Alarm", "alias": ["200"]}]},
+  "knowledge": {"entities": [{"entity_id": "DV-KB-001", "entity_type": "alarm", "entity_name": "ALM-201 Knowledge Alarm", "alias": ["201"], "desc": "knowledge-enriched alarm", "attributes": {"severity": "major"}, "relationships": []}]},
+  "runtime_refresh": {"entities": [{"entity_id": "DV-RUN-001", "entity_type": "alarm", "entity_name": "ALM-200 Runtime Alarm Updated", "alias": ["200"], "desc": "runtime refreshed", "attributes": {}, "relationships": []}]},
+  "invalid_missing_name": {"entities": [{"entity_id": "DV-BAD-001", "entity_type": "alarm", "alias": ["bad"]}]}
+}

@@ -40,8 +40,7 @@
       "entity_name": "ALM-100003 Certificate Is About to Expire",
       "alias": [
         "100003",
-        "ALM-100003",
-        "Certificate Is About to Expire"
+        "ALM-100003"
       ],
       "desc": "This alarm indicates a certificate expiration warning.",
       "attributes": {},

@@ -1,0 +1,11 @@
+{
+  "entity_build": {
+    "page_size": 100,
+    "retry_count": 2,
+    "once_endpoints": [{"name": "bootstrap", "url": "mock://runtime"}],
+    "daily_endpoints": [
+      {"name": "runtime", "url": "mock://runtime"},
+      {"name": "knowledge", "url": "mock://knowledge"}
+    ]
+  }
+}
