@@ -19,6 +19,7 @@ env/
 # Local configs and secrets
 config/*.local.*
 config/llm.local.json
+scripts/mysql_entity_data_mock_local.py
 .env
 .env.*
 

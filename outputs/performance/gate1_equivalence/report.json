@@ -1,0 +1,932 @@
+{
+  "schema": "dv.gate1-equivalence.1",
+  "total_comparisons": 60,
+  "mismatches": 0,
+  "passed": true,
+  "queries": [
+    {
+      "name": "no_match_worst_scan",
+      "normalized_query": "查询nomatchingentitywordxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "entity_types": [],
+      "category": "plan"
+    },
+    {
+      "name": "single_exact_hit",
+      "normalized_query": "checkcpuusage000001001now",
+      "entity_types": [],
+      "category": "plan"
+    },
+    {
+      "name": "multi_exact_hit",
+      "normalized_query": "comparecpuusage000001001anddistributedservicemetric000001003",
+      "entity_types": [],
+      "category": "plan"
+    },
+    {
+      "name": "repeated_hit",
+      "normalized_query": "cpuusage000001001andcpuusage000001001andcpuusage000001001",
+      "entity_types": [],
+      "category": "plan"
+    },
+    {
+      "name": "long_query_hit",
+      "normalized_query": "checkxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxcpuusage000001001yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+      "entity_types": [],
+      "category": "plan"
+    },
+    {
+      "name": "context_rule_pass",
+      "normalized_query": "checksystemcpuusage000001005now",
+      "entity_types": [],
+      "category": "plan"
+    },
+    {
+      "name": "context_rule_reject",
+      "normalized_query": "checkcpuusage000001005now",
+      "entity_types": [],
+      "category": "plan"
+    },
+    {
+      "name": "structured_alarm_hit",
+      "normalized_query": "查询alm-51020-node-000001006告警",
+      "entity_types": [],
+      "category": "plan"
+    },
+    {
+      "name": "type_filtered_device",
+      "normalized_query": "checkkpi000000052now",
+      "entity_types": [
+        "device"
+      ],
+      "category": "plan"
+    },
+    {
+      "name": "edge_partial_prefix",
+      "normalized_query": "cpuusage00000100",
+      "entity_types": [],
+      "category": "edge"
+    },
+    {
+      "name": "edge_cjk",
+      "normalized_query": "查询cpuusage000001001告警",
+      "entity_types": [],
+      "category": "edge"
+    },
+    {
+      "name": "edge_2k_long",
+      "normalized_query": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxcpuusage000001001yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+      "entity_types": [],
+      "category": "edge"
+    },
+    {
+      "name": "edge_single_char",
+      "normalized_query": "c",
+      "entity_types": [],
+      "category": "edge"
+    },
+    {
+      "name": "edge_type_mismatch",
+      "normalized_query": "checkcpuusage000001001now",
+      "entity_types": [
+        "device"
+      ],
+      "category": "edge"
+    },
+    {
+      "name": "edge_all_padding",
+      "normalized_query": "xxxxxxxxxxxxxxxxxxxxxxxx",
+      "entity_types": [],
+      "category": "edge"
+    }
+  ],
+  "rows": [
+    {
+      "volume": "50k",
+      "name": "no_match_worst_scan",
+      "category": "plan",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "single_exact_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "multi_exact_hit",
+      "category": "plan",
+      "count_instr": 2,
+      "count_ac": 2,
+      "ids_instr": [
+        "DV-MOCK-000000334",
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334",
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "repeated_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "long_query_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "context_rule_pass",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "context_rule_reject",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "structured_alarm_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000336"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000336"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "type_filtered_device",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000018"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000018"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "edge_partial_prefix",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "edge_cjk",
+      "category": "edge",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "edge_2k_long",
+      "category": "edge",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "edge_single_char",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "edge_type_mismatch",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "50k",
+      "name": "edge_all_padding",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "no_match_worst_scan",
+      "category": "plan",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "single_exact_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "multi_exact_hit",
+      "category": "plan",
+      "count_instr": 2,
+      "count_ac": 2,
+      "ids_instr": [
+        "DV-MOCK-000000334",
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334",
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "repeated_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "long_query_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "context_rule_pass",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "context_rule_reject",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "structured_alarm_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000336"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000336"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "type_filtered_device",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000018"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000018"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "edge_partial_prefix",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "edge_cjk",
+      "category": "edge",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "edge_2k_long",
+      "category": "edge",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "edge_single_char",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "edge_type_mismatch",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "100k",
+      "name": "edge_all_padding",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "no_match_worst_scan",
+      "category": "plan",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "single_exact_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "multi_exact_hit",
+      "category": "plan",
+      "count_instr": 2,
+      "count_ac": 2,
+      "ids_instr": [
+        "DV-MOCK-000000334",
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334",
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "repeated_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "long_query_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "context_rule_pass",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "context_rule_reject",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "structured_alarm_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000336"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000336"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "type_filtered_device",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000018"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000018"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "edge_partial_prefix",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "edge_cjk",
+      "category": "edge",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "edge_2k_long",
+      "category": "edge",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "edge_single_char",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "edge_type_mismatch",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "200k",
+      "name": "edge_all_padding",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "no_match_worst_scan",
+      "category": "plan",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "single_exact_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "multi_exact_hit",
+      "category": "plan",
+      "count_instr": 2,
+      "count_ac": 2,
+      "ids_instr": [
+        "DV-MOCK-000000334",
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334",
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "repeated_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "long_query_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "context_rule_pass",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "context_rule_reject",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000335"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000335"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "structured_alarm_hit",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000336"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000336"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "type_filtered_device",
+      "category": "plan",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000018"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000018"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "edge_partial_prefix",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "edge_cjk",
+      "category": "edge",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "edge_2k_long",
+      "category": "edge",
+      "count_instr": 1,
+      "count_ac": 1,
+      "ids_instr": [
+        "DV-MOCK-000000334"
+      ],
+      "ids_ac": [
+        "DV-MOCK-000000334"
+      ],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "edge_single_char",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "edge_type_mismatch",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    },
+    {
+      "volume": "500k",
+      "name": "edge_all_padding",
+      "category": "edge",
+      "count_instr": 0,
+      "count_ac": 0,
+      "ids_instr": [],
+      "ids_ac": [],
+      "order_match": true,
+      "ok": true
+    }
+  ]
+}

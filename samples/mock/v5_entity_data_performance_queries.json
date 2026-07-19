@@ -1,0 +1,72 @@
+{
+  "schema": "dv.entity-data-performance-queries.1",
+  "endpoint": "/v1/entity-data:execute",
+  "queries": [
+    {
+      "name": "no_match",
+      "request": {
+        "contract_version": "v1",
+        "operation": "MATCH_WORDS",
+        "payload": {
+          "normalized_query": "nomatchingentitywordxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "entity_types": []
+        }
+      }
+    },
+    {
+      "name": "single_hit",
+      "request": {
+        "contract_version": "v1",
+        "operation": "MATCH_WORDS",
+        "payload": {
+          "normalized_query": "checkcpuusage000001001now",
+          "entity_types": []
+        }
+      }
+    },
+    {
+      "name": "multi_hit",
+      "request": {
+        "contract_version": "v1",
+        "operation": "MATCH_WORDS",
+        "payload": {
+          "normalized_query": "comparecpuusage000001001anddistributedservicemetric000001003",
+          "entity_types": []
+        }
+      }
+    },
+    {
+      "name": "repeated_hit",
+      "request": {
+        "contract_version": "v1",
+        "operation": "MATCH_WORDS",
+        "payload": {
+          "normalized_query": "cpuusage000001001andcpuusage000001001andcpuusage000001001",
+          "entity_types": []
+        }
+      }
+    },
+    {
+      "name": "type_filtered_device",
+      "request": {
+        "contract_version": "v1",
+        "operation": "MATCH_WORDS",
+        "payload": {
+          "normalized_query": "checkkpi000000052",
+          "entity_types": ["device"]
+        }
+      }
+    },
+    {
+      "name": "batch_get_after_match",
+      "request": {
+        "contract_version": "v1",
+        "operation": "BATCH_GET_ENTITIES",
+        "payload": {
+          "entity_ids": ["DV-MOCK-000000334"],
+          "expected_data_version": null
+        }
+      }
+    }
+  ]
+}

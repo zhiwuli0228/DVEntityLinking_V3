@@ -1,0 +1,151 @@
+{
+  "schema": "dv.no-llm-low-latency-test-plan.1",
+  "description": "Fixed golden queries and load profiles for low-latency MATCH_WORDS and Query Recall collection without LLM participation.",
+  "llm": {
+    "enabled": false,
+    "enforcement": [
+      "QueryRecallFacade is invoked with use_llm=false for every request",
+      "EntityLinkingModule is assembled without an extraction enhancer",
+      "EntityLinkingModule is assembled without a candidate reranker"
+    ]
+  },
+  "profiles": {
+    "smoke": {
+      "duration_seconds": 5,
+      "concurrencies": [1, 10],
+      "warmups_per_worker": 1
+    },
+    "analysis": {
+      "duration_seconds": 120,
+      "concurrencies": [1, 10, 25, 50, 100],
+      "warmups_per_worker": 2
+    },
+    "formal": {
+      "duration_seconds": 900,
+      "concurrencies": [1, 10, 25, 50, 100],
+      "warmups_per_worker": 3
+    }
+  },
+  "cases": [
+    {
+      "name": "no_match_worst_scan",
+      "raw_query": "查询 nomatchingentitywordxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "normalized_query": "查询nomatchingentitywordxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "entity_types": [],
+      "layers": ["remote_match", "query_recall"],
+      "weight": 2,
+      "expected_remote_match_count": [0, 0],
+      "expected_recall_status": "no_match",
+      "expected_remote_entity_ids": [],
+      "expected_recall_entity_ids": []
+    },
+    {
+      "name": "single_exact_hit",
+      "raw_query": "check CPU Usage 000001001 now",
+      "normalized_query": "checkcpuusage000001001now",
+      "entity_types": [],
+      "layers": ["remote_match", "query_recall"],
+      "weight": 4,
+      "expected_remote_match_count": [1, 1],
+      "expected_recall_status": "linked",
+      "expected_remote_entity_ids": ["DV-MOCK-000000334"],
+      "expected_recall_entity_ids": ["DV-MOCK-000000334"]
+    },
+    {
+      "name": "multi_exact_hit",
+      "raw_query": "compare CPU Usage 000001001 and Distributed Service Metric 000001003",
+      "normalized_query": "comparecpuusage000001001anddistributedservicemetric000001003",
+      "entity_types": [],
+      "layers": ["remote_match", "query_recall"],
+      "weight": 2,
+      "expected_remote_match_count": [2, 2],
+      "expected_recall_status": "linked",
+      "expected_remote_entity_ids": ["DV-MOCK-000000334", "DV-MOCK-000000335"],
+      "expected_recall_entity_ids": ["DV-MOCK-000000334", "DV-MOCK-000000335"]
+    },
+    {
+      "name": "repeated_hit",
+      "raw_query": "CPU Usage 000001001 and CPU Usage 000001001 and CPU Usage 000001001",
+      "normalized_query": "cpuusage000001001andcpuusage000001001andcpuusage000001001",
+      "entity_types": [],
+      "layers": ["remote_match", "query_recall"],
+      "weight": 1,
+      "expected_remote_match_count": [1, 1],
+      "expected_recall_status": "linked",
+      "expected_remote_entity_ids": ["DV-MOCK-000000334"],
+      "expected_recall_entity_ids": ["DV-MOCK-000000334"]
+    },
+    {
+      "name": "long_query_hit",
+      "raw_query": "check xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx CPU Usage 000001001 yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+      "normalized_query": "checkxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxcpuusage000001001yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+      "entity_types": [],
+      "layers": ["remote_match", "query_recall"],
+      "weight": 1,
+      "expected_remote_match_count": [1, 1],
+      "expected_recall_status": "linked",
+      "expected_remote_entity_ids": ["DV-MOCK-000000334"],
+      "expected_recall_entity_ids": ["DV-MOCK-000000334"]
+    },
+    {
+      "name": "context_rule_pass",
+      "raw_query": "check system CPU Usage 000001005 now",
+      "normalized_query": "checksystemcpuusage000001005now",
+      "entity_types": [],
+      "layers": ["remote_match", "query_recall"],
+      "weight": 1,
+      "expected_remote_match_count": [1, 1],
+      "expected_recall_status": "linked",
+      "expected_remote_entity_ids": ["DV-MOCK-000000335"],
+      "expected_recall_entity_ids": ["DV-MOCK-000000335"]
+    },
+    {
+      "name": "context_rule_reject",
+      "raw_query": "check CPU Usage 000001005 now",
+      "normalized_query": "checkcpuusage000001005now",
+      "entity_types": [],
+      "layers": ["remote_match", "query_recall"],
+      "weight": 1,
+      "expected_remote_match_count": [1, 1],
+      "expected_recall_status": "no_match",
+      "expected_remote_entity_ids": ["DV-MOCK-000000335"],
+      "expected_recall_entity_ids": []
+    },
+    {
+      "name": "structured_alarm_hit",
+      "raw_query": "查询 ALM-51020-NODE-000001006 告警",
+      "normalized_query": "查询alm-51020-node-000001006告警",
+      "entity_types": [],
+      "layers": ["remote_match", "query_recall"],
+      "weight": 1,
+      "expected_remote_match_count": [1, 1],
+      "expected_recall_status": "linked",
+      "expected_remote_entity_ids": ["DV-MOCK-000000336"],
+      "expected_recall_entity_ids": ["DV-MOCK-000000336"]
+    },
+    {
+      "name": "type_filtered_device",
+      "raw_query": "check KPI000000052 now",
+      "normalized_query": "checkkpi000000052now",
+      "entity_types": ["device"],
+      "layers": ["remote_match"],
+      "weight": 0,
+      "expected_remote_match_count": [1, 1],
+      "expected_recall_status": null,
+      "expected_remote_entity_ids": ["DV-MOCK-000000018"],
+      "expected_recall_entity_ids": null
+    },
+    {
+      "name": "explicit_bypass",
+      "raw_query": "system health summary dashboard",
+      "normalized_query": "systemhealthsummarydashboard",
+      "entity_types": [],
+      "layers": ["query_recall"],
+      "weight": 0,
+      "expected_remote_match_count": null,
+      "expected_recall_status": "not_required",
+      "expected_remote_entity_ids": null,
+      "expected_recall_entity_ids": []
+    }
+  ]
+}

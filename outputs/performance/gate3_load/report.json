@@ -1,0 +1,194 @@
+{
+  "schema": "dv.gate3-load.1",
+  "volume": "500k",
+  "pool_size": 110,
+  "waitress_threads": 120,
+  "timing_enabled": true,
+  "sustained_seconds": 900,
+  "cells": [
+    {
+      "volume": "500k",
+      "length": "short",
+      "concurrency": 50,
+      "duration_seconds": 900,
+      "requests": 183808,
+      "p50_ms": 91.257,
+      "p95_ms": 929.935,
+      "mean_ms": 244.865,
+      "max_ms": 7312.921,
+      "qps": 204.122,
+      "transport_errors": 0,
+      "correctness_failures": 0,
+      "passed": true,
+      "breakdown": {
+        "ac_match": {
+          "n": 183958,
+          "mean_ms": 0.007,
+          "p50_ms": 0.007,
+          "p95_ms": 0.011,
+          "max_ms": 0.293
+        },
+        "data_version": {
+          "n": 183958,
+          "mean_ms": 18.641,
+          "p50_ms": 10.635,
+          "p95_ms": 15.456,
+          "max_ms": 1802.913
+        },
+        "fetch": {
+          "n": 183958,
+          "mean_ms": 127.22,
+          "p50_ms": 12.898,
+          "p95_ms": 657.231,
+          "max_ms": 6988.505
+        },
+        "sum_per_request": {
+          "n": 183958,
+          "mean_ms": 145.868,
+          "p50_ms": 25.433,
+          "p95_ms": 867.424
+        }
+      },
+      "phase": "sustained",
+      "elapsed_wall_seconds": 905.0
+    },
+    {
+      "volume": "500k",
+      "length": "short",
+      "concurrency": 100,
+      "duration_seconds": 900,
+      "requests": 182567,
+      "p50_ms": 92.903,
+      "p95_ms": 1856.061,
+      "mean_ms": 494.142,
+      "max_ms": 120028.025,
+      "qps": 195.081,
+      "transport_errors": 114,
+      "correctness_failures": 0,
+      "passed": false,
+      "breakdown": {
+        "ac_match": {
+          "n": 182766,
+          "mean_ms": 0.007,
+          "p50_ms": 0.007,
+          "p95_ms": 0.011,
+          "max_ms": 0.186
+        },
+        "data_version": {
+          "n": 182766,
+          "mean_ms": 26.428,
+          "p50_ms": 10.242,
+          "p95_ms": 19.195,
+          "max_ms": 27863.176
+        },
+        "fetch": {
+          "n": 182766,
+          "mean_ms": 307.251,
+          "p50_ms": 12.949,
+          "p95_ms": 1728.492,
+          "max_ms": 114036.111
+        },
+        "sum_per_request": {
+          "n": 182766,
+          "mean_ms": 333.687,
+          "p50_ms": 25.747,
+          "p95_ms": 1746.025
+        }
+      },
+      "phase": "sustained",
+      "elapsed_wall_seconds": 1085.0
+    },
+    {
+      "volume": "500k",
+      "length": "ultra",
+      "concurrency": 50,
+      "duration_seconds": 900,
+      "requests": 183777,
+      "p50_ms": 90.816,
+      "p95_ms": 932.716,
+      "mean_ms": 244.9,
+      "max_ms": 28242.003,
+      "qps": 204.104,
+      "transport_errors": 0,
+      "correctness_failures": 0,
+      "passed": true,
+      "breakdown": {
+        "ac_match": {
+          "n": 183927,
+          "mean_ms": 0.011,
+          "p50_ms": 0.01,
+          "p95_ms": 0.016,
+          "max_ms": 0.39
+        },
+        "data_version": {
+          "n": 183927,
+          "mean_ms": 18.553,
+          "p50_ms": 11.024,
+          "p95_ms": 15.324,
+          "max_ms": 1793.271
+        },
+        "fetch": {
+          "n": 183927,
+          "mean_ms": 128.966,
+          "p50_ms": 12.986,
+          "p95_ms": 680.41,
+          "max_ms": 27956.195
+        },
+        "sum_per_request": {
+          "n": 183927,
+          "mean_ms": 147.529,
+          "p50_ms": 25.581,
+          "p95_ms": 869.741
+        }
+      },
+      "phase": "sustained",
+      "elapsed_wall_seconds": 903.6
+    },
+    {
+      "volume": "500k",
+      "length": "ultra",
+      "concurrency": 100,
+      "duration_seconds": 900,
+      "requests": 182330,
+      "p50_ms": 96.111,
+      "p95_ms": 1848.973,
+      "mean_ms": 494.991,
+      "max_ms": 120019.181,
+      "qps": 190.616,
+      "transport_errors": 92,
+      "correctness_failures": 0,
+      "passed": false,
+      "breakdown": {
+        "ac_match": {
+          "n": 182551,
+          "mean_ms": 0.011,
+          "p50_ms": 0.011,
+          "p95_ms": 0.018,
+          "max_ms": 0.513
+        },
+        "data_version": {
+          "n": 182551,
+          "mean_ms": 26.519,
+          "p50_ms": 10.609,
+          "p95_ms": 21.942,
+          "max_ms": 55545.109
+        },
+        "fetch": {
+          "n": 182551,
+          "mean_ms": 306.735,
+          "p50_ms": 13.368,
+          "p95_ms": 1723.759,
+          "max_ms": 115801.118
+        },
+        "sum_per_request": {
+          "n": 182551,
+          "mean_ms": 333.266,
+          "p50_ms": 26.579,
+          "p95_ms": 1745.629
+        }
+      },
+      "phase": "sustained",
+      "elapsed_wall_seconds": 1099.1
+    }
+  ]
+}

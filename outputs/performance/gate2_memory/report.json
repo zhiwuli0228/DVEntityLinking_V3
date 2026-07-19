@@ -1,0 +1,80 @@
+{
+  "schema": "dv.gate2-memory.1",
+  "patterns": 500000,
+  "single_process": {
+    "baseline_rss_mb": 31.63,
+    "steady_rss_mb": 80.54,
+    "peak_rss_mb": 80.54,
+    "index_rss_delta_mb": 48.91,
+    "index_size_bytes": 28891512,
+    "index_size_mb": 27.55,
+    "pattern_count": 500000,
+    "build_seconds": 0.548
+  },
+  "multi_process": {
+    "n1": {
+      "n_processes": 1,
+      "per_process": [
+        {
+          "pid": 81944,
+          "steady_rss_mb": 80.22,
+          "index_size_mb": 27.55,
+          "build_seconds": 0.527
+        }
+      ],
+      "total_rss_mb": 80.22,
+      "avg_per_process_mb": 80.22
+    },
+    "n2": {
+      "n_processes": 2,
+      "per_process": [
+        {
+          "pid": 259408,
+          "steady_rss_mb": 80.46,
+          "index_size_mb": 27.55,
+          "build_seconds": 0.557
+        },
+        {
+          "pid": 264884,
+          "steady_rss_mb": 80.21,
+          "index_size_mb": 27.55,
+          "build_seconds": 0.573
+        }
+      ],
+      "total_rss_mb": 160.67,
+      "avg_per_process_mb": 80.33
+    },
+    "n4": {
+      "n_processes": 4,
+      "per_process": [
+        {
+          "pid": 261332,
+          "steady_rss_mb": 80.88,
+          "index_size_mb": 27.55,
+          "build_seconds": 0.711
+        },
+        {
+          "pid": 77968,
+          "steady_rss_mb": 80.2,
+          "index_size_mb": 27.55,
+          "build_seconds": 0.709
+        },
+        {
+          "pid": 262240,
+          "steady_rss_mb": 80.4,
+          "index_size_mb": 27.55,
+          "build_seconds": 0.701
+        },
+        {
+          "pid": 263560,
+          "steady_rss_mb": 80.52,
+          "index_size_mb": 27.55,
+          "build_seconds": 0.72
+        }
+      ],
+      "total_rss_mb": 322.0,
+      "avg_per_process_mb": 80.5
+    }
+  },
+  "note": "index built from locally-generated seeder patterns; index memory is pattern-driven and independent of MySQL. Multi-process simulates N independent workers (AC index is per-process, not shared)."
+}
