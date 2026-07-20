@@ -1,6 +1,3 @@
-Exit code: 0
-Wall time: 0.7 seconds
-Output:
 # DVAIAgentService 运行时实体构建元数据接口设计
 
 最后更新：2026-07-20
